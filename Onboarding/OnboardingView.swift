@@ -44,7 +44,6 @@ struct OnboardingView: View {
                                 .foregroundStyle(Color.white)
                         }
                     }
-                        
                 }
             }
          
