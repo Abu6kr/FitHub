@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    
+    @State private var image = UIImage()
     @ObservedObject var vmUser = UserInfoViewModel()
     
     @State var onboardingState: Int = 0
@@ -16,6 +16,8 @@ struct OnboardingView: View {
     let transition: AnyTransition = .asymmetric(
         insertion: .move(edge: .trailing),
         removal: .move(edge: .leading))
+    
+    @AppStorage("isOnboarding") var isOnboarding: Bool?
     
     var body: some View {
         ZStack {
@@ -29,35 +31,23 @@ struct OnboardingView: View {
                     InformationUser(vmUser: vmUser)
                         .transition(transition)
                 case 2:
-                    GoalUserView()
+                    GoalUserView(vmUser: vmUser)
                         .transition(transition)
                 case 3:
-                    InfoUserImageNameView(vmUser: vmUser)
+                    InfoUserImageNameView(vmUser: vmUser, onboardingState: $onboardingState)
+                        .transition(transition)
+                case 4:
+                    NotificationsStartView()
                         .transition(transition)
                 default:
-                    ZStack {
-                        Color.themeView.background.ignoresSafeArea(.all)
-                        VStack {
-                            Text(vmUser.UserName)
-                                .foregroundStyle(Color.white)
-                            Text(vmUser.gender)
-                                .foregroundStyle(Color.white)
-                        }
-                    }
+                    NotificationsStartView()
+                        .transition(transition)
                 }
             }
          
             ZStack {
-                if onboardingState == 2 {
-                    Button(action: {
-                        withAnimation(.spring) {
-                            onboardingState += 1
-                        }
-                    }) {
-                        ButtonView(title: "Set Move Goal", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
-                            .padding()
-                    }
-                } else {
+                switch onboardingState {
+                case 0...2:
                     Button {
                         withAnimation(.spring) {
                             onboardingState += 1
@@ -67,6 +57,27 @@ struct OnboardingView: View {
                         }
                     } label: {
                         ButtonView(title: "Continue", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
+                            .padding()
+                    }
+                case 3:
+                    Text("")
+
+                case 4:
+                    Button(action: {
+                        withAnimation(.spring) {
+                            isOnboarding = false
+                        }
+                    }) {
+                        ButtonView(title: "Start", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
+                            .padding()
+                    }
+                default:
+                    Button(action: {
+                        withAnimation(.spring) {
+                            isOnboarding = false
+                        }
+                    }) {
+                        ButtonView(title: "Start", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
                             .padding()
                     }
                 }

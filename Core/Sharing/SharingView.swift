@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SharingView: View {
-    @State private var GetStart: Bool = false
+    @AppStorage("GetStart") var GetStart: Bool = false
     var body: some View {
         NavigationStack {
             ZStack {

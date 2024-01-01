@@ -29,7 +29,7 @@ struct TabBarViewCustems: View {
             Group {
                 switch sectionTabBar {
                 case .Summary:
-                    Text("SummaryView")
+                    SummaryView()
                 case .FitHub:
                     FitHubView()
                 case .Sharing:
@@ -42,7 +42,6 @@ struct TabBarViewCustems: View {
                 HStack(alignment: .center) {
                     
                     SummaryIcon
-                      
 
                     .padding(.leading,40)
                     

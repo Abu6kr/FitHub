@@ -16,6 +16,7 @@ class UserInfoViewModel: ObservableObject {
     @Published var UserName: String = ""
     @Published var UserAge: Int = 18
     @Published var gender: String = ""
+    @Published var caloresDay: Int = 1250
     
     // MARK: User Info Save
     @AppStorage("name") var currentUserName: String?
@@ -37,6 +38,7 @@ class UserInfoViewModel: ObservableObject {
         currentUserName = UserName
         currentUserAge = Int(UserAge)
         currentUserGender = gender
+        currentUserCaloresDay = caloresDay
     }
     
     

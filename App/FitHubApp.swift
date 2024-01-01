@@ -9,10 +9,17 @@ import SwiftUI
 
 @main
 struct FitHubApp: App {
+    @AppStorage("isOnboarding") var isOnboarding: Bool = true
     var body: some Scene {
         WindowGroup {
-            TabBarViewCustems()
+            if isOnboarding {
+                OnboardingView()
                 .preferredColorScheme(.dark)
+            } else {
+                TabBarViewCustems()
+                    .preferredColorScheme(.dark)
+            }
+     
         }
     }
 }

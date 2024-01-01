@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct FitHubView: View {
+    
     @State var showScanner: Bool = false
     @State private var showfullScaner: Bool = false
+    @ObservedObject var vmUser = UserInfoViewModel()
+    
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
@@ -18,11 +21,7 @@ struct FitHubView: View {
                     ScrollView {
                       
                         VStack {
-                            
-                            Text(Date.now, format: .dateTime.day().month().year())
-                                .foregroundStyle(Color.gray)
-                                .frame(maxWidth: .infinity,alignment:.leading)
-                                .padding(.horizontal)
+                            TabBarNavigtionCutems(vmUser: vmUser)
                             
                             createRings()
                                 .padding(.vertical)
@@ -37,9 +36,11 @@ struct FitHubView: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         withAnimation(.spring){ showScanner = true }
                     }
+                    vmUser.loadImage(forKey: "imagePrilesKeySaved")
                 }
-                
-            }.navigationTitle("FitHub")
+            }
+            .navigationTitle("FitHub")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

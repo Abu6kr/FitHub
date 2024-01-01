@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct InfoUserImageNameView: View {
-    @State private var image = UIImage()
+    
+    @State var image : UIImage?
     @State private var showSheet = false
     
     @ObservedObject var vmUser: UserInfoViewModel
+    @Binding var onboardingState: Int
     
     var body: some View {
         ZStack {
@@ -24,27 +26,29 @@ struct InfoUserImageNameView: View {
                     .frame(maxWidth: .infinity,alignment:.leading)
                     .padding(.leading)
                 ZStack {
+                    if let image = image {
+                        Image(uiImage: image)
+                             .resizable()
+                             .scaledToFill()
+                             .frame(width: 150, height: 150)
+                             .background(Color.theme.Gray03)
+                             .clipShape(Circle())
+                             .padding(1)
+                             .background(
+                                 RoundedRectangle(cornerRadius: .infinity)
+                                     .stroke(lineWidth: 1.0)
+                                     .shadow(color: .white, radius: 10)
+                                     .foregroundStyle(Color.themeView.secondaryText)
+                             )
+                             .clipShape(Circle())
+                    }
+                    
                     if let image = vmUser.imageProfiles {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFill()
                             .frame(width: 150, height: 150)
                             .background(Color.theme.Gray02)
-                            .clipShape(Circle())
-                            .padding(1)
-                            .background(
-                                RoundedRectangle(cornerRadius: .infinity)
-                                    .stroke(lineWidth: 1.0)
-                                    .shadow(color: .white, radius: 10)
-                                    .foregroundStyle(Color.themeView.secondaryText)
-                            )
-                            .clipShape(Circle())
-                    } else {
-                        Image("")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 150, height: 150)
-                            .background(Color.theme.Gray03)
                             .clipShape(Circle())
                             .padding(1)
                             .background(
@@ -77,16 +81,26 @@ struct InfoUserImageNameView: View {
                 Spacer()
             }.foregroundStyle(Color.themeView.secondaryText)
             .sheet(isPresented: $showSheet) {
-                ImagePicker(sourceType: .photoLibrary, selectedImage: $vmUser.imageProfiles)
+                ImagePicker(sourceType: .photoLibrary, selectedImage: self.$image)
             }
-            
-            
-         
+            Button(action: {
+                withAnimation(.spring) {
+                    vmUser.saveImage(imageName: "imagePrilesKeySaved", image: image!, key: "imagePrilesKeySaved")
+                    onboardingState += 1
+                }
+                vmUser.saveUsrInfo()
+            }) {
+                ButtonView(title: "Save Image", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
+                    .padding()
+            }.frame(maxHeight: .infinity,alignment: .bottom)
+                .onAppear {
+                    vmUser.loadImage(forKey: "imagePrilesKeySaved")
+                }
         }
     }
 }
 
 #Preview {
-    InfoUserImageNameView(vmUser: UserInfoViewModel())
+    InfoUserImageNameView(vmUser: UserInfoViewModel(), onboardingState: .constant(0))
         .preferredColorScheme(.dark)
 }
