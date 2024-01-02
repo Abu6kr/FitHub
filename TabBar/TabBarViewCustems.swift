@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct TabBarViewCustems: View {
+    @ObservedObject var vmUser = UserInfoViewModel()
+
+    
     @State private var sectionTabBar: tabBarTab = .FitHub
     @State private var  playRun: Bool = false
     
@@ -42,8 +45,7 @@ struct TabBarViewCustems: View {
                 HStack(alignment: .center) {
                     
                     SummaryIcon
-
-                    .padding(.leading,40)
+                        .padding(.leading,40)
                     
                     Spacer()
                     
@@ -52,6 +54,7 @@ struct TabBarViewCustems: View {
                     Spacer()
                         FindesShereIcon
                             .padding(.trailing,40)
+                    
                 }.padding(.top,10)
                 .frame(height: 64)
                 .background(Divider()
@@ -59,12 +62,15 @@ struct TabBarViewCustems: View {
                     .foregroundStyle(Color.white)
                     .offset(y: -56.8)
                 )
-                .background(Color.themeView.background)
+                .background(Color.themeView.background2)
             }.tabViewStyle(.page(indexDisplayMode: .never))
                 .frame(height: 84)
                 .frame(maxHeight: .infinity,alignment: .bottom)
                 .offset(y: 6)
                 .ignoresSafeArea()
+        }
+        .onAppear {
+            vmUser.loadImage(forKey: "imagePrilesKeySaved")
         }
     }
 }

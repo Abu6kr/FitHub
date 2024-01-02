@@ -51,9 +51,7 @@ struct OnboardingView: View {
                     Button {
                         withAnimation(.spring) {
                             onboardingState += 1
-                            if onboardingState != 1 {
-                                vmUser.saveUsrInfo()
-                            }
+
                         }
                     } label: {
                         ButtonView(title: "Continue", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
@@ -83,7 +81,7 @@ struct OnboardingView: View {
                 }
             }.frame(maxHeight: .infinity,alignment: .bottom)
           
-        }
+        }  .navigationBarBackButtonHidden(true)
     }
 }
 

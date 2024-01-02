@@ -19,12 +19,8 @@ struct InfoUserImageNameView: View {
         ZStack {
             Color.themeView.background.ignoresSafeArea(.all)
             VStack {
-                Text("Account")
-                    .font(.system(size: 40,weight: .semibold))
-                    .foregroundStyle(Color.themeView.secondaryText)
-                    .padding(.top,55)
-                    .frame(maxWidth: .infinity,alignment:.leading)
-                    .padding(.leading)
+
+
                 ZStack {
                     if let image = image {
                         Image(uiImage: image)
@@ -70,7 +66,7 @@ struct InfoUserImageNameView: View {
                     Text("Name")
                         .font(.system(size: 16,weight: .regular))
                         .padding(.all,5)
-                    TextField("AboBakr", text: $vmUser.UserName)
+                    TextField("AboBakr", text: $vmUser.currentUserName)
                         .frame(height: 50)
                         .padding(.leading)
                         .background(Color.theme.Gray04)
@@ -79,7 +75,9 @@ struct InfoUserImageNameView: View {
                 }.padding()
                 
                 Spacer()
-            }.foregroundStyle(Color.themeView.secondaryText)
+                
+            }.padding(.top,55)
+            .foregroundStyle(Color.themeView.secondaryText)
             .sheet(isPresented: $showSheet) {
                 ImagePicker(sourceType: .photoLibrary, selectedImage: self.$image)
             }
@@ -88,7 +86,6 @@ struct InfoUserImageNameView: View {
                     vmUser.saveImage(imageName: "imagePrilesKeySaved", image: image!, key: "imagePrilesKeySaved")
                     onboardingState += 1
                 }
-                vmUser.saveUsrInfo()
             }) {
                 ButtonView(title: "Save Image", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
                     .padding()

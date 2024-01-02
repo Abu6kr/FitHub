@@ -7,21 +7,52 @@
 
 import SwiftUI
 
+
 struct SummaryView: View {
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color.themeView.background.ignoresSafeArea(.all)
-                ScrollView {
-                    VStack {
-                        
-                    }
-                }
-            }
+        GeometryReader {
+            let safeArea = $0.safeAreaInsets
+            let size = $0.size
+            Summary(safeArea: safeArea, size: size)
+                .ignoresSafeArea(.container, edges: .top)
         }
+        .preferredColorScheme(.dark)
     }
 }
 
-#Preview {
-    SummaryView()
+struct SummaryView_Previews: PreviewProvider {
+    static var previews: some View {
+        SummaryView()
+    }
 }
+
+
+
+
+
+
+
+
+
+
+//struct SummaryView: View {
+//    var body: some View {
+//        NavigationStack {
+//            ZStack {
+//                Color.themeView.background.ignoresSafeArea(.all)
+//                ScrollView {
+//                    VStack {
+//
+//                        TimeToWalkView()
+//                    }
+//                }
+//            }.navigationTitle("Summary")
+//                .navigationBarTitleDisplayMode(.inline)
+//        }
+//    }
+//}
+
+//#Preview {
+//    SummaryView()
+//        .preferredColorScheme(.dark)
+//}

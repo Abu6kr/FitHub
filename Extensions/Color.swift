@@ -33,6 +33,8 @@ struct ColorTheme {
     let Red = Color("ColorRed")
     let Yellow = Color("Yellow")
     let Colorblack = Color("Colorblack")
+    let ColorPinerDark = Color("ColorPinerDark")
+    let Gray07 = Color("ColorGray07")
     
     let moveRingWeekdayBackground = Color(red: 53 / 255, green: 17 / 255, blue: 22 / 255)
     let moveRingBackground = Color(red: 33 / 255, green: 2 / 255, blue: 3 / 255)
@@ -54,6 +56,7 @@ struct ColorTheme {
 struct ColorTheme2 {
     let Coloraccent =  Color("Coloraccent")
     let background = Color("Colorbackground")
+    let background2 = Color("Colorbackground2")
     let secondaryText = Color("ColorsecondaryText")
     let activityValueText = Color(red: 170 / 255, green: 180 / 255, blue: 190 / 255)
 }

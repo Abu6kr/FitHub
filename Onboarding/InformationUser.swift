@@ -11,10 +11,9 @@ struct InformationUser: View {
     
     @State private var sectionSex: SexSection = .Male
     @State private var dateOfBirth = Date.now
-    
-    @State private var dataHeight: Double = 5.8
-    @State private var dataWeight: Int = 183
+
     @ObservedObject var vmUser: UserInfoViewModel
+    
     var body: some View {
         ZStack {
             Color.themeView.background.ignoresSafeArea(.all)
@@ -46,9 +45,9 @@ struct InformationUser: View {
                         Text("Sex")
                             .foregroundStyle(Color.white)
                         Spacer()
-                        Picker(selection:$vmUser.gender ,
+                        Picker(selection:$vmUser.currentUserGender ,
                                label:
-                                Text(vmUser.gender.count > 1 ? vmUser.gender : "Select a gender")
+                                Text(vmUser.currentUserGender.count > 1 ? vmUser.currentUserGender : "Select a gender")
                             .font(.headline)
                             .foregroundColor(.purple)
                             .frame(height: 55)
@@ -68,7 +67,7 @@ struct InformationUser: View {
                     HStack {
                         Text("Height")
                         Spacer()
-                        TextField("5’10”", value: $dataHeight, formatter: NumberFormatter())
+                        TextField("5’10”", value: vmUser.$currentUserHeight, formatter: NumberFormatter())
                             .frame(width: 40)
                             .foregroundStyle(Color.theme.Gray)
                     }
@@ -78,7 +77,7 @@ struct InformationUser: View {
                         Text("Weight")
                         Spacer()
                  
-                        TextField("183 lb", value: $dataWeight, formatter: NumberFormatter())
+                        TextField("183 lb", value: vmUser.$currentUserWeight, formatter: NumberFormatter())
                             .frame(width: 40)
                             .foregroundStyle(Color.theme.Gray)
                     }
@@ -91,7 +90,7 @@ struct InformationUser: View {
             }
           
         }
-        .navigationBarBackButtonHidden(true)
+      
     }
 }
 
@@ -100,7 +99,3 @@ struct InformationUser: View {
         .preferredColorScheme(.dark)
 }
 
-enum SexSection {
-    case Male
-    case female
-}

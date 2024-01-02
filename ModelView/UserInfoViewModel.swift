@@ -12,20 +12,16 @@ class UserInfoViewModel: ObservableObject {
     
     
     
-    // MARK: User Info
-    @Published var UserName: String = ""
-    @Published var UserAge: Int = 18
-    @Published var gender: String = ""
-    @Published var caloresDay: Int = 1250
+
     
     // MARK: User Info Save
-    @AppStorage("name") var currentUserName: String?
-    @AppStorage("age") var currentUserAge: Int?
-    @AppStorage("CaloresDay") var currentUserCaloresDay: Int?
-    @AppStorage("gender") var currentUserGender: String?
-    @AppStorage("Height") var currentUserHeight: Double?
-    @AppStorage("Weight") var currentUserWeight: Int?
-    
+    @AppStorage("NAMEUSER_KEY") var currentUserName: String = "name"
+    @AppStorage("AGE_KEY") var currentUserAge: Int = 18
+    @AppStorage("GENDER_KEY") var currentUserGender: String = "man"
+    @AppStorage("HEIGHT_KEY") var currentUserHeight: Double = 160
+    @AppStorage("WEIGHT_KEY") var currentUserWeight: Int = 60
+    @AppStorage("NUMBER_KEY") var currentUserCaloresDay: Int = 1250
+
     
     @Published var imageProfiles: UIImage?
     @Published var savedimages: Bool = false
@@ -34,12 +30,26 @@ class UserInfoViewModel: ObservableObject {
     
     
     
-    func saveUsrInfo(){
-        currentUserName = UserName
-        currentUserAge = Int(UserAge)
-        currentUserGender = gender
-        currentUserCaloresDay = caloresDay
-    }
+//    func saveUsrInfo(){
+//        currentUserName = UserName
+//        currentUserAge = Int(UserAge)
+//        currentUserGender = gender
+//        currentUserCaloresDay = caloresDay
+//    }
+    
+    
+//    @Published var nameUser: String = ""
+//    
+//    func retrieveText() {
+//        if let savednameUser = UserDefaults.standard.string(forKey: "nameUserforKey")   {
+//            nameUser = savednameUser
+//        }
+//    }
+//    
+//    func saveInfo() {
+//        UserDefaults.standard.set(nameUser, forKey: "nameUserforKey")
+//    }
+//    
     
     
     func saveImage(imageName: String, image: UIImage,key: String) {
@@ -76,4 +86,10 @@ class UserInfoViewModel: ObservableObject {
 
 extension NSNotification.Name {
     static let saveVenueProfileImage = Notification.Name("imagePrilesKeySaved")
+}
+
+
+enum SexSection {
+    case Male
+    case female
 }

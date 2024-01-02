@@ -11,7 +11,7 @@ struct SharingAddView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.themeView.background.ignoresSafeArea(.all)
+                LinearGradient(colors: [Color.themeView.background2.opacity(0.6),Color.themeView.background2.opacity(0.6)], startPoint: .top, endPoint: .bottom).ignoresSafeArea(.all)
                 ScrollView {
                     VStack {
                         shereTextActive

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GoalUserView: View {
-//    @State private var CaloresDay: Int = 1250
     
     @ObservedObject var vmUser : UserInfoViewModel
     
@@ -32,17 +31,17 @@ struct GoalUserView: View {
                 VStack {
                     HStack {
                         Button(action: {
-                            vmUser.caloresDay -= 1
+                            vmUser.currentUserCaloresDay -= 1
                         }){
                             PLusMinusButton(SectionPLusMinus: .Minus)
                         }
-                        TextField("\(vmUser.caloresDay)", value:$vmUser.caloresDay, formatter: NumberFormatter())
+                        TextField("\(vmUser.currentUserCaloresDay)", value:$vmUser.currentUserCaloresDay, formatter: NumberFormatter())
                             .frame(width: 200)
                             .font(.system(size: 50,weight: .semibold))
                             .foregroundStyle(Color.themeView.secondaryText)
                             .offset(x: 40)
                         Button(action: {
-                            vmUser.caloresDay += 1
+                            vmUser.currentUserCaloresDay += 1
                         }){
                             PLusMinusButton(SectionPLusMinus: .PLus)
                         }
@@ -55,14 +54,9 @@ struct GoalUserView: View {
                 }.padding(.top,52)
                 Spacer()
                 
-                Button(action: {
-                    vmUser.saveUsrInfo()
-                }, label: {
-                    Text("Save")
-                })
             }
         }
-        .navigationBarBackButtonHidden(true)
+      
     }
 }
 

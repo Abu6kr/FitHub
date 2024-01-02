@@ -17,18 +17,33 @@ struct FitHubView: View {
         NavigationStack {
             GeometryReader { geometry in
                 ZStack {
-                    Color.themeView.background.ignoresSafeArea(.all)
+                    LinearGradient(colors: [Color.themeView.background2.opacity(0.6),Color.themeView.background2.opacity(0.6)], startPoint: .top, endPoint: .bottom).ignoresSafeArea(.all)
+//                    Color.themeView.background.ignoresSafeArea(.all)
                     ScrollView {
                       
                         VStack {
                             TabBarNavigtionCutems(vmUser: vmUser)
                             
-                            createRings()
-                                .padding(.vertical)
+                            TabView {
+                                
+                                TabViewCaloresDayView(vmUser: vmUser)
+                                
+                                TabViewCaloresDayView(vmUser: vmUser)
+                                
+                            }.tabViewStyle(.page(indexDisplayMode: .always))
+                                .frame(height: 320)
+                                
+                            
+
+//                            createRings()
+//                                .padding(.vertical)
                           
-                            createFooter()
-                          
+//                            createFooter()
+                        
+                            
+                            
                         }
+                        
                     }
                 }
                 .overlay { FoodScanner.padding(.bottom,35) }
@@ -164,11 +179,15 @@ extension FitHubView {
     private var FoodScanner: some View {
         Button(action: {self.showfullScaner.toggle()}) {
             ZStack {
+                
                 Image(systemName: "camera")
                     .padding(8)
                     .background(Color.gray)
                     .clipShape(.circle)
+                
                 Image("scanerCode")
+                    .foregroundStyle(Color.themeView.secondaryText)
+                
             }.frame(maxHeight: .infinity,alignment:.bottom)
             .offset(y: showScanner ? 0 : 300)
             .opacity(showScanner ? 1 : 0)
