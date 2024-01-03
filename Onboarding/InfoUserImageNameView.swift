@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InfoUserImageNameView: View {
     
-    @State var image : UIImage?
+    @State var image = UIImage()
     @State private var showSheet = false
     
     @ObservedObject var vmUser: UserInfoViewModel
@@ -22,7 +22,6 @@ struct InfoUserImageNameView: View {
 
 
                 ZStack {
-                    if let image = image {
                         Image(uiImage: image)
                              .resizable()
                              .scaledToFill()
@@ -37,7 +36,7 @@ struct InfoUserImageNameView: View {
                                      .foregroundStyle(Color.themeView.secondaryText)
                              )
                              .clipShape(Circle())
-                    }
+                    
                     
                     if let image = vmUser.imageProfiles {
                         Image(uiImage: image)
@@ -83,7 +82,7 @@ struct InfoUserImageNameView: View {
             }
             Button(action: {
                 withAnimation(.spring) {
-                    vmUser.saveImage(imageName: "imagePrilesKeySaved", image: image!, key: "imagePrilesKeySaved")
+                    vmUser.saveImage(imageName: "imagePrilesKeySaved", image: image, key: "imagePrilesKeySaved")
                     onboardingState += 1
                 }
             }) {

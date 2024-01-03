@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TabBarViewCustems: View {
+    @EnvironmentObject var healthManger :  HealthManger
+    
     @ObservedObject var vmUser = UserInfoViewModel()
 
     
@@ -35,6 +37,7 @@ struct TabBarViewCustems: View {
                     SummaryView()
                 case .FitHub:
                     FitHubView()
+                        .environmentObject(healthManger)
                 case .Sharing:
                     SharingView()
                 }
@@ -78,6 +81,7 @@ struct TabBarViewCustems: View {
 struct TabBarViewCustems_Previews: PreviewProvider {
     static var previews: some View {
         TabBarViewCustems()
+            .environmentObject(HealthManger())
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
     }

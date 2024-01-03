@@ -9,14 +9,18 @@ import SwiftUI
 
 @main
 struct FitHubApp: App {
+    @StateObject var healthManger = HealthManger()
     @AppStorage("isOnboarding") var isOnboarding: Bool = true
+    
     var body: some Scene {
         WindowGroup {
             if isOnboarding {
                 OnboardingView()
                 .preferredColorScheme(.dark)
+                
             } else {
                 TabBarViewCustems()
+                    .environmentObject(healthManger)
                     .preferredColorScheme(.dark)
             }
      

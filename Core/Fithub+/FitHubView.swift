@@ -12,38 +12,36 @@ struct FitHubView: View {
     @State var showScanner: Bool = false
     @State private var showfullScaner: Bool = false
     @ObservedObject var vmUser = UserInfoViewModel()
+    @EnvironmentObject var healthManger :  HealthManger
+    
     
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
                 ZStack {
                     LinearGradient(colors: [Color.themeView.background2.opacity(0.6),Color.themeView.background2.opacity(0.6)], startPoint: .top, endPoint: .bottom).ignoresSafeArea(.all)
-//                    Color.themeView.background.ignoresSafeArea(.all)
                     ScrollView {
-                      
                         VStack {
+                            
                             TabBarNavigtionCutems(vmUser: vmUser)
                             
                             TabView {
-                                
                                 TabViewCaloresDayView(vmUser: vmUser)
-                                
-                                TabViewCaloresDayView(vmUser: vmUser)
+                                VStack {
+                                    LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
+                                        ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
+                                            ActivtyCstmesView(activty: item.value)
+                                        }
+                                    }
+                                }.frame(height: 245)
+                                    .background(Color.theme.Gray07)
+                                    .clipShape(.rect(cornerRadius: 12))
+                                    .padding(.horizontal)
                                 
                             }.tabViewStyle(.page(indexDisplayMode: .always))
                                 .frame(height: 320)
-                                
-                            
-
-//                            createRings()
-//                                .padding(.vertical)
-                          
-//                            createFooter()
-                        
-                            
                             
                         }
-                        
                     }
                 }
                 .overlay { FoodScanner.padding(.bottom,35) }
@@ -52,9 +50,9 @@ struct FitHubView: View {
                         withAnimation(.spring){ showScanner = true }
                     }
                     vmUser.loadImage(forKey: "imagePrilesKeySaved")
+                    healthManger.fatechTodaySteps()
                 }
-            }
-            .navigationTitle("FitHub")
+            }.navigationTitle("FitHub")
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -62,8 +60,11 @@ struct FitHubView: View {
 
 #Preview {
     FitHubView()
+        .environmentObject(HealthManger())
         .preferredColorScheme(.dark)
 }
+
+
 
 extension FitHubView {
     
@@ -132,33 +133,7 @@ extension FitHubView {
     
     func createFooter() -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 60) {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Steps")
-                        .font(Font.system(size: 18, weight: .regular, design: .default))
-                        .kerning(0.05)
-                        .foregroundColor(Color.white)
-                    Text("5 588")
-                        .font(Font.system(size: 28, weight: .semibold, design: .rounded))
-                        .kerning(0.25)
-                        .foregroundColor(Color.themeView.activityValueText)
-                        .padding([.top], -3)
-                }
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Distance").font(Font.system(size: 18, weight: .regular, design: .default)).kerning(0.05).foregroundColor(Color.white)
-                    (
-                        Text("4,5")
-                            .font(Font.system(size: 28, weight: .semibold, design: .rounded))
-                            .kerning(0.25)
-                            .foregroundColor(Color.themeView.activityValueText)
-                        + Text("KM")
-                            .font(Font.system(size: 24, weight: .semibold, design: .rounded))
-                            .kerning(0.3).foregroundColor(Color.themeView.activityValueText)
-                    )
-                        .padding([.top], -3)
-                }
-                Spacer()
-            }
+
             Divider()
                 .background(Color.gray)
                 .frame(height: 2)
@@ -179,7 +154,6 @@ extension FitHubView {
     private var FoodScanner: some View {
         Button(action: {self.showfullScaner.toggle()}) {
             ZStack {
-                
                 Image(systemName: "camera")
                     .padding(8)
                     .background(Color.gray)
@@ -198,3 +172,23 @@ extension FitHubView {
 }
 
 
+
+
+
+
+
+
+
+
+//                            createRings()
+//                                .padding(.vertical)
+
+//                            createFooter()
+
+//                            VStack {
+//                                LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
+//                                    ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
+//                                        ActivtyCstmesView(activty: item.value)
+//                                    }
+//                                }
+//                            }
