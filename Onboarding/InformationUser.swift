@@ -10,10 +10,18 @@ import SwiftUI
 struct InformationUser: View {
     
     @State private var sectionSex: SexSection = .Male
-    @State private var dateOfBirth = Date.now
+    
+
+    let dateFormatter: DateFormatter = {
+           let formatter = DateFormatter()
+           formatter.dateStyle = .long
+           return formatter
+       }()
 
     @ObservedObject var vmUser: UserInfoViewModel
-    
+    @State private var birthDate = Date()
+    @State private var age: DateComponents = DateComponents()
+        
     var body: some View {
         ZStack {
             Color.themeView.background.ignoresSafeArea(.all)
@@ -30,19 +38,20 @@ struct InformationUser: View {
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Color.themeView.secondaryText)
                 }
-                
+               
                 GroupBox {
-                    HStack {
-                        Text("Date of Birth")
-                        Spacer()
-                        DatePicker(selection: $dateOfBirth, displayedComponents: .date) {
-                        }
-                            .foregroundStyle(Color.theme.Gray)
+                    
+                    VStack {
+                        DatePicker("Date of Birth", selection: $birthDate, in: ...Date(), displayedComponents: .date)
+                            .onChange(of: birthDate, perform: { value in
+                                age = Calendar.current.dateComponents([.year, .month, .day], from: birthDate, to: Date())
+                            })
                     }
+
                     
                     Divider()
                     HStack {
-                        Text("Sex")
+                        Text("Gender")
                             .foregroundStyle(Color.white)
                         Spacer()
                         Picker(selection:$vmUser.currentUserGender ,
@@ -85,10 +94,10 @@ struct InformationUser: View {
                     
                 }.padding(.horizontal,22)
                     .padding(.top,41)
-                
+                Text("Age-> \(age.year ?? 0)")
+
                 Spacer()
             }
-          
         }
       
     }
@@ -98,4 +107,5 @@ struct InformationUser: View {
     InformationUser(vmUser: UserInfoViewModel())
         .preferredColorScheme(.dark)
 }
+
 

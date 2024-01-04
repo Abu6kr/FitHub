@@ -28,31 +28,3 @@ struct SummaryView_Previews: PreviewProvider {
 
 
 
-
-
-
-
-
-
-
-//struct SummaryView: View {
-//    var body: some View {
-//        NavigationStack {
-//            ZStack {
-//                Color.themeView.background.ignoresSafeArea(.all)
-//                ScrollView {
-//                    VStack {
-//
-//                        TimeToWalkView()
-//                    }
-//                }
-//            }.navigationTitle("Summary")
-//                .navigationBarTitleDisplayMode(.inline)
-//        }
-//    }
-//}
-
-//#Preview {
-//    SummaryView()
-//        .preferredColorScheme(.dark)
-//}

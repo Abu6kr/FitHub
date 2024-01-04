@@ -11,36 +11,46 @@ struct TabViewCaloresDayView: View {
     @ObservedObject var vmUser : UserInfoViewModel
     
     var body: some View {
-        ZStack {
-            HStack {
-                VStack(alignment: .leading,spacing: 20) {
-                    Text("Calores")
-                        .font(.system(size: 18,weight: .bold))
-                        .foregroundStyle(Color.white)
-                    
-                    ZStack {
-                        Text("\(vmUser.currentUserCaloresDay)")
-                            .font(.system(size: 22,weight: .bold))
-                            .foregroundStyle(Color.white)
-                        RoundedRectangle(cornerRadius: .infinity)
-                            .stroke(lineWidth: 8)
-                            .frame(width: 141,height: 141)
-                            .foregroundStyle(Color.theme.ColorPinerDark)
-                    }
-                }.padding(.all)
-                Spacer()
-            }
-        }.padding(.vertical)
-        .frame(maxWidth: .infinity)
-        .background(Color.theme.Gray07)
-        .clipShape(.rect(cornerRadius: 12))
-        .padding(.horizontal,10)
-        
+        VStack(alignment: .leading) {
+            Text("Calores")
+                .font(.system(size: 22,weight: .regular))
+                .foregroundStyle(Color.white)
+                .padding(.leading)
+            ZStack {
+                HStack {
+                    VStack(alignment: .leading,spacing: 20) {
+                        ZStack {
+                            RingView(
+                                percentage: Double(vmUser.currentUserCaloresDay),
+                                backgroundColor: Color.theme.exerciseRingBackground,
+                                startColor: Color.theme.exerciseRingStartColor,
+                                endColor: Color.theme.exerciseRingEndColor,
+                                thickness: 10
+                            )
+                            Text("\(vmUser.currentUserCaloresDay)")
+                                .font(.system(size: 22,weight: .bold))
+                                .foregroundStyle(Color.white)
+                        }
+                        .frame(width: 160, height: 160)
+                        .aspectRatio(contentMode: .fit)
+                    }.padding(10)
+                    Spacer()
+                }
+            }.padding(.vertical)
+                .frame(maxWidth: .infinity)
+                .frame(height: 230)
+                .background(Color.theme.Gray07)
+                .clipShape(.rect(cornerRadius: 12))
+                .padding(.horizontal,10)
+        }
     }
 }
 
 #Preview {
-    TabViewCaloresDayView(vmUser: UserInfoViewModel())
+    ZStack {
+        Color.black
+        TabViewCaloresDayView(vmUser: UserInfoViewModel())
+    }
 }
 
 
@@ -51,19 +61,30 @@ struct TabViewSetsDay: View {
     @EnvironmentObject var healthManger :  HealthManger
 
     var body: some View {
-        ZStack {
-            LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
-                ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
-                    ActivtyCstmesView(activty: item.value)
+        VStack(alignment: .leading) {
+            Text("Calores")
+                .font(.system(size: 22,weight: .regular))
+                .foregroundStyle(Color.white)
+                .padding(.leading)
+            ZStack {
+                HStack {
+                    VStack(alignment: .leading,spacing: 20) {
+                            LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
+                                ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
+                                    ActivtyCstmesView(activty: item.value)
+                                }
+                            }
+                    }.frame(width: 160, height: 160)
+                        .aspectRatio(contentMode: .fit)
+                    Spacer()
                 }
-            }
-
-        }.padding(.vertical)
-        .frame(maxWidth: .infinity)
-        .background(Color.theme.Gray07)
-        .clipShape(.rect(cornerRadius: 12))
-        .padding(.horizontal,10)
-        
+            }.padding(.vertical)
+                .frame(maxWidth: .infinity)
+                .frame(height: 230)
+                .background(Color.theme.Gray07)
+                .clipShape(.rect(cornerRadius: 12))
+                .padding(.horizontal,10)
+        }
     }
 }
 

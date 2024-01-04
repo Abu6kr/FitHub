@@ -11,6 +11,14 @@ import SwiftUI
 class UserInfoViewModel: ObservableObject {
     
     
+    @Published var wakeUpTime: Date = UserDefaults.standard.object(forKey: "wakeUpTime") as? Date ?? Date() {
+            didSet {
+                UserDefaults.standard.set(self.wakeUpTime, forKey: "wakeUpTime")
+            }
+        }
+    @Published  var age: DateComponents = DateComponents()
+    
+    
     
 
     
@@ -27,7 +35,7 @@ class UserInfoViewModel: ObservableObject {
     @Published var savedimages: Bool = false
     
     
-    
+
     
     
 //    func saveUsrInfo(){

@@ -26,30 +26,23 @@ struct FitHubView: View {
                             TabBarNavigtionCutems(vmUser: vmUser)
                             
                             TabView {
-                                TabViewCaloresDayView(vmUser: vmUser)
-                                VStack {
-                                    LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
-                                        ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
-                                            ActivtyCstmesView(activty: item.value)
-                                        }
-                                    }
-                                }.frame(height: 245)
-                                    .background(Color.theme.Gray07)
-                                    .clipShape(.rect(cornerRadius: 12))
-                                    .padding(.horizontal)
                                 
-                            }.tabViewStyle(.page(indexDisplayMode: .always))
-                                .frame(height: 320)
+                                TabViewCaloresDayView(vmUser: vmUser)
+                                
+                                HealthDay()
                             
+                            }.tabViewStyle(.page(indexDisplayMode: .always))
+                                .frame(height: 340)
                         }
                     }
                 }
                 .overlay { FoodScanner.padding(.bottom,35) }
                 .onAppear {
+                    vmUser.loadImage(forKey: "imagePrilesKeySaved")
+
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         withAnimation(.spring){ showScanner = true }
                     }
-                    vmUser.loadImage(forKey: "imagePrilesKeySaved")
                     healthManger.fatechTodaySteps()
                 }
             }.navigationTitle("FitHub")
@@ -67,6 +60,33 @@ struct FitHubView: View {
 
 
 extension FitHubView {
+    
+    func HealthDay() -> some View {
+        VStack(alignment: .leading) {
+            Text("Health Day")
+                .font(.system(size: 22,weight: .regular))
+                .foregroundStyle(Color.white)
+                .padding(.leading)
+            ZStack {
+                HStack {
+                    VStack {
+                        LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
+                            ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
+                                ActivtyCstmesView(activty: item.value)
+                            }
+                        }
+                    }
+                    Spacer()
+                }
+            }.padding(.vertical)
+                .frame(maxWidth: .infinity)
+                .frame(height: 230)
+                .background(Color.theme.Gray07)
+                .clipShape(.rect(cornerRadius: 12))
+                .padding(.horizontal,10)
+        }
+    }
+    
     
     func createRings() -> some View {
         HStack {

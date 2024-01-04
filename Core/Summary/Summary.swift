@@ -27,9 +27,11 @@ struct Summary: View {
                 .zIndex(1)
                 
                 VStack {
-
+                    TabBarSummary()
+                        .padding(.bottom)
                     // MARK: - Album View
                     AlbumView()
+
                 }
                 .padding(.top, 10)
                 .zIndex(0)
@@ -100,7 +102,7 @@ struct Summary: View {
     func AlbumView() -> some View {
         VStack(spacing:  25) {
             VStack {
-                ForEach(0 ..< 5) { item in
+                ForEach(0 ..< 2) { item in
                     TimeToWalkView()
                 }
             }.foregroundStyle(Color.white)
