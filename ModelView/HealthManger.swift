@@ -24,12 +24,14 @@ class HealthManger: ObservableObject {
     init() {
         
         let steps = HKQuantityType(.stepCount)
-        
-        let heathTypes: Set = [steps]
+        let caloreis = HKQuantityType(.activeEnergyBurned)
+        let heathTypes: Set = [steps,caloreis]
         
         Task {
             do {
                 try await healthStore.requestAuthorization(toShare: [], read: heathTypes)
+                fatechTodaySteps()
+                fatechTodayCalores()
             } catch {
                 print("Error feacting Helth data")
             }
@@ -38,6 +40,7 @@ class HealthManger: ObservableObject {
     
     func fatechTodaySteps() {
         let steps = HKQuantityType(.stepCount)
+        let caloreis = HKQuantityType(.activeEnergyBurned)
         let predicate = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
         let query = HKStatisticsQuery(quantityType: steps, quantitySamplePredicate: predicate) { _, result, error in
             guard let quanity = result?.sumQuantity(), error == nil else {
@@ -51,20 +54,36 @@ class HealthManger: ObservableObject {
                 self.activtys["todaySetps"] = activty
             }
             
-            print(stepConut.formattedSting())
+//            print(stepConut.formattedSting())
         }
-        
         healthStore.execute(query)
     }
     
+    
+    func fatechTodayCalores() {
+        let calores = HKQuantityType(.activeEnergyBurned)
+        let predicate = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
+        let query = HKStatisticsQuery(quantityType: calores, quantitySamplePredicate: predicate) { _, result, error in
+            guard let quanity = result?.sumQuantity(), error == nil else {
+                print("error fatching today calorie data")
+                return
+            }
+            
+            let caloriesBurned = quanity.doubleValue(for: .kilocalorie())
+            let activty = Activty(id: 0, title: "Today Calories", subtitle: "Goal 900", image: "flame", amount: caloriesBurned.formattedSting())
+            
+            DispatchQueue.main.async {
+                self.activtys["todayCalories"] = activty
+            }
+            
+//            print(caloriesBurned.formattedSting())
+            
+        }
+        healthStore.execute(query)
+    }
+    
+    
+    
+    
 }
 
-extension Double {
-    func formattedSting() -> String {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        numberFormatter.maximumFractionDigits = 0
-        
-        return numberFormatter.string(from: NSNumber(value: self))!
-    }
-}

@@ -29,7 +29,7 @@ struct ColorTheme {
     let Indigo = Color("ColorIndigo")
     let Orange = Color("ColorOrange")
     let Pink = Color("ColorPink")
-    let Purple = Color("Purple")
+    let Purple = Color("ColorPink")
     let Red = Color("ColorRed")
     let Yellow = Color("Yellow")
     let Colorblack = Color("Colorblack")

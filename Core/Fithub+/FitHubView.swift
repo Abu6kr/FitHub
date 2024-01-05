@@ -11,42 +11,85 @@ struct FitHubView: View {
     
     @State var showScanner: Bool = false
     @State private var showfullScaner: Bool = false
+    @State private var Search: String = ""
+    
     @ObservedObject var vmUser = UserInfoViewModel()
     @EnvironmentObject var healthManger :  HealthManger
     
+    let columns = [
+        GridItem(.flexible(minimum: 40)),
+        GridItem(.flexible(minimum: 40)),
+    ]
     
     var body: some View {
         NavigationStack {
-            GeometryReader { geometry in
-                ZStack {
-                    LinearGradient(colors: [Color.themeView.background2.opacity(0.6),Color.themeView.background2.opacity(0.6)], startPoint: .top, endPoint: .bottom).ignoresSafeArea(.all)
-                    ScrollView {
-                        VStack {
-                            
-                            TabBarNavigtionCutems(vmUser: vmUser)
-                            
-                            TabView {
-                                
-                                TabViewCaloresDayView(vmUser: vmUser)
-                                
-                                HealthDay()
-                            
-                            }.tabViewStyle(.page(indexDisplayMode: .always))
-                                .frame(height: 340)
+            ZStack {
+                LinearGradient(colors: [Color.themeView.background2.opacity(0.6),Color.themeView.background2.opacity(0.6)], startPoint: .top, endPoint: .bottom).ignoresSafeArea(.all)
+                ScrollView {
+                    VStack {
+                        
+                        TabBarNavigtionCutems(vmUser: vmUser)
+                        
+                        TabViewCaloresDayView(vmUser: vmUser)
+                        
+                        
+                        LazyVGrid(columns: columns,alignment: .center){
+                            ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
+                                ActivtyCstmesView(activty: item.value)
+                            }
+                        }.padding(.top)
+                    }
+                }
+                
+                VStack {
+                    HStack {
+                        HStack {
+                            TextField("Search", text: $Search)
+                            if !Search.isEmpty {
+                                Button(action: {Search = ""}){
+                                    Image(systemName: "xmark.circle.fill")
+                                }
+                            }
                         }
-                    }
+                        .padding(.all,10)
+                        .background(Color.theme.Gray02)
+                        .clipShape(.rect(cornerRadius: 10))
+                        Button(action: {self.showfullScaner.toggle()}) {
+                            ZStack {
+                                Image(systemName: "camera")
+                                    .padding(8)
+                                    .background(Color.gray)
+                                    .clipShape(.circle)
+                                
+                                Image("scanerCode")
+                                    .foregroundStyle(Color.themeView.secondaryText)
+                                
+                            }
+                        }
+                    }.padding(.all,10)
+                    Spacer()
+                }.padding(.top,10)
+                    .frame(height: 120)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.themeView.background2)
+                    .cornerRadius(22, corners: [.topLeft,.topRight])
+                    .frame(maxHeight: .infinity,alignment:.bottom)
+                    .offset(y: showScanner ? 0 : 600)
+                    .opacity(showScanner ? 1 : 0)
+                    .fullScreenCover(isPresented: $showfullScaner){ FoodScannerView() }
+                
+            }
+            
+            .onAppear {
+                vmUser.loadImage(forKey: "imagePrilesKeySaved")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    withAnimation(.spring){ showScanner = true }
                 }
-                .overlay { FoodScanner.padding(.bottom,35) }
-                .onAppear {
-                    vmUser.loadImage(forKey: "imagePrilesKeySaved")
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        withAnimation(.spring){ showScanner = true }
-                    }
-                    healthManger.fatechTodaySteps()
-                }
-            }.navigationTitle("FitHub")
-            .navigationBarTitleDisplayMode(.inline)
+                healthManger.fatechTodaySteps()
+                healthManger.fatechTodayCalores()
+            }
+//            .navigationTitle("FitHub")
+//            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -60,32 +103,6 @@ struct FitHubView: View {
 
 
 extension FitHubView {
-    
-    func HealthDay() -> some View {
-        VStack(alignment: .leading) {
-            Text("Health Day")
-                .font(.system(size: 22,weight: .regular))
-                .foregroundStyle(Color.white)
-                .padding(.leading)
-            ZStack {
-                HStack {
-                    VStack {
-                        LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
-                            ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
-                                ActivtyCstmesView(activty: item.value)
-                            }
-                        }
-                    }
-                    Spacer()
-                }
-            }.padding(.vertical)
-                .frame(maxWidth: .infinity)
-                .frame(height: 230)
-                .background(Color.theme.Gray07)
-                .clipShape(.rect(cornerRadius: 12))
-                .padding(.horizontal,10)
-        }
-    }
     
     
     func createRings() -> some View {
@@ -194,21 +211,3 @@ extension FitHubView {
 
 
 
-
-
-
-
-
-
-//                            createRings()
-//                                .padding(.vertical)
-
-//                            createFooter()
-
-//                            VStack {
-//                                LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
-//                                    ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
-//                                        ActivtyCstmesView(activty: item.value)
-//                                    }
-//                                }
-//                            }

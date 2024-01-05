@@ -11,10 +11,7 @@ struct TabBarNavigtionCutems: View {
     @ObservedObject var vmUser : UserInfoViewModel
     var body: some View {
         HStack {
-            Text(Date.now, format: .dateTime.day().month().year())
-                .foregroundStyle(Color.gray)
-                .frame(maxWidth: .infinity,alignment:.leading)
-                .padding(.horizontal)
+
             NavigationLink {
                 AccountView(vmUser: vmUser)
             } label: {
@@ -22,7 +19,7 @@ struct TabBarNavigtionCutems: View {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 36, height: 36)
+                        .frame(width: 40, height: 40)
                         .background(Color.red)
                         .clipShape(Circle())
                         .padding(.horizontal)
@@ -30,13 +27,28 @@ struct TabBarNavigtionCutems: View {
                     Image("")
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 36, height: 36)
+                        .frame(width: 40, height: 40)
                         .background(Color.theme.Gray02)
                         .clipShape(Circle())
                         .padding(.horizontal)
                 }
             }
-        }
+            Spacer()
+            Text(Date.now, format: .dateTime.day().month().year())
+                .foregroundStyle(Color.gray)
+            
+            Image(systemName: "bell")
+                .font(.system(size: 15,weight: .regular))
+                .padding(10)
+                .background(
+                    RoundedRectangle(cornerRadius: .infinity)
+                        .stroke(lineWidth: 1.0)
+                )
+                .padding(.horizontal)
+
+                
+        }.padding(.vertical)
+
         .onAppear {
             vmUser.loadImage(forKey: "imagePrilesKeySaved")
         }
@@ -53,3 +65,4 @@ struct TabBarNavigtionCutems_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
     }
 }
+

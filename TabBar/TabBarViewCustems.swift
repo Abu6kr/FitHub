@@ -60,20 +60,19 @@ struct TabBarViewCustems: View {
                     
                 }.padding(.top,10)
                 .frame(height: 64)
-                .background(Divider()
-                    .frame(maxHeight: .infinity,alignment: .bottom)
-                    .foregroundStyle(Color.white)
-                    .offset(y: -56.8)
-                )
+//                .background(Divider()
+//                    .frame(maxHeight: .infinity,alignment: .bottom)
+//                    .foregroundStyle(Color.white)
+//                    .offset(y: -56.8)
+//                )
                 .background(Color.themeView.background2)
             }.tabViewStyle(.page(indexDisplayMode: .never))
                 .frame(height: 84)
+                .clipShape(.rect(cornerRadius: 22))
                 .frame(maxHeight: .infinity,alignment: .bottom)
                 .offset(y: 6)
                 .ignoresSafeArea()
-        }
-        .onAppear {
-            vmUser.loadImage(forKey: "imagePrilesKeySaved")
+
         }
     }
 }
