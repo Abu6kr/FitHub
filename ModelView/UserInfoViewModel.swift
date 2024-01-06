@@ -101,3 +101,48 @@ enum SexSection {
     case Male
     case female
 }
+
+
+
+
+
+
+
+//MARK: uarl get user 
+func getApiUer() async throws -> MoldeUer {
+    
+    let enduer = "URL:HHPPEES.WEEPSE"
+    
+    guard let url = URL(string: enduer) else {
+        throw EGhEorr.inabideReoges
+    }
+    
+    let (data, respnes) = try await URLSession.shared.data(from: url)
+    
+    guard let respnes = respnes as? HTTPURLResponse, respnes.statusCode == 200  else {
+        throw EGhEorr.inabideReoges
+    }
+    
+    do {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try decoder.decode(MoldeUer.self, from: data)
+    } catch {
+        throw EGhEorr.invideGalta
+    }
+    
+    
+}
+
+
+struct MoldeUer: Codable {
+    var name: String
+    var id: String
+}
+
+
+enum EGhEorr: Error {
+    case inbideUrl
+    case inabideReoges
+    case invideGalta
+}

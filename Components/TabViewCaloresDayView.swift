@@ -76,15 +76,6 @@ struct ActivtyCstmesView: View {
             }
             
             HStack {
-                ZStack {
-                    RingView(
-                        percentage: 0.5,
-                        backgroundColor: Color.theme.standRingBackground,
-                        startColor: Color.theme.standRingStartColor,
-                        endColor: Color.theme.standRingEndColor,
-                        thickness: 2
-                    )
-                }.frame(width: 50, height: 50)
               
                 Image(systemName: activty.image)
                     .font(.system(size: 18,weight: .regular))
@@ -95,6 +86,7 @@ struct ActivtyCstmesView: View {
                     .foregroundStyle(Color.themeView.activityValueText)
                     .font(.system(size: 18,weight: .regular))
             }.frame(maxWidth: .infinity,alignment: .leading)
+                .padding(.vertical,8)
             
         }.padding(.all,10)
             .frame(maxWidth: .infinity)
@@ -104,65 +96,3 @@ struct ActivtyCstmesView: View {
     }
 }
 
-
-
-
-
-
-//Text(activty.title)
-//    .font(Font.system(size: 18, weight: .regular, design: .default))
-//    .kerning(0.05)
-//    .foregroundColor(Color.white)
-//HStack {
-//    Image(systemName: activty.image)
-//        .font(.system(size: 18,weight: .regular))
-//    
-//    Text(activty.amount)
-//        .font(Font.system(size: 28, weight: .semibold, design: .rounded))
-//        .kerning(0.25)
-//        .foregroundColor(Color.themeView.activityValueText)
-//        .padding([.top], -3)
-//}
-
-
-//struct TabViewSetsDay: View {
-//    @ObservedObject var vmUser : UserInfoViewModel
-//    @State var activty: Activty
-//    @EnvironmentObject var healthManger :  HealthManger
-//
-//    var body: some View {
-//        VStack(alignment: .leading) {
-//            Text("Calores")
-//                .font(.system(size: 22,weight: .regular))
-//                .foregroundStyle(Color.white)
-//                .padding(.leading)
-//            ZStack {
-//                HStack {
-//                    VStack(alignment: .leading,spacing: 20) {
-//                        LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
-//                            ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
-//                                ActivtyCstmesView(activty: item.value)
-//                            }
-//                        }
-//                    }.frame(width: 160, height: 160)
-//                        .aspectRatio(contentMode: .fit)
-//                    Spacer()
-//                }
-//            }.padding(.vertical)
-//                .frame(maxWidth: .infinity)
-//                .frame(height: 230)
-//                .background(Color.theme.Gray07)
-//                .clipShape(.rect(cornerRadius: 12))
-//                .padding(.horizontal,10)
-//        }
-//    }
-//}
-//
-//#Preview {
-//    TabViewSetsDay(vmUser: UserInfoViewModel(), activty: Activty(id: 0, title: "Step Day", subtitle: "7938", image: "", amount: "1000"))
-//        .environmentObject(HealthManger())
-//}
-
-//                                ActivtyCstmesView(activty: Activty(id: 0, title: "Step Day", subtitle: "7938", image: "figure.walk", amount: "1000"))
-//                                ActivtyCstmesView(activty: Activty(id: 0, title: "Step Day", subtitle: "7938", image: "figure.walk", amount: "1000"))
-//                                ActivtyCstmesView(activty: Activty(id: 0, title: "Step Day", subtitle: "7938", image: "figure.walk", amount: "1000"))

@@ -20,7 +20,6 @@ struct FoodScannerView: View {
                 
                 ScannerView(scannedImage: self.$scannedImage)
 
-
             }.navigationBarBackButtonHidden(true)
         }
         .sheet(isPresented: $showScanner) {

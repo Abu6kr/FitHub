@@ -22,20 +22,20 @@ struct InfoUserImageNameView: View {
 
 
                 ZStack {
-                        Image(uiImage: image)
-                             .resizable()
-                             .scaledToFill()
-                             .frame(width: 150, height: 150)
-                             .background(Color.theme.Gray03)
-                             .clipShape(Circle())
-                             .padding(1)
-                             .background(
-                                 RoundedRectangle(cornerRadius: .infinity)
-                                     .stroke(lineWidth: 1.0)
-                                     .shadow(color: .white, radius: 10)
-                                     .foregroundStyle(Color.themeView.secondaryText)
-                             )
-                             .clipShape(Circle())
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 150, height: 150)
+                        .background(Color.theme.Gray03)
+                        .clipShape(Circle())
+                        .padding(1)
+                        .background(
+                            RoundedRectangle(cornerRadius: .infinity)
+                                .stroke(lineWidth: 1.0)
+                                .shadow(color: .white, radius: 10)
+                                .foregroundStyle(Color.themeView.secondaryText)
+                        )
+                        .clipShape(Circle())
                     
                     
                     if let image = vmUser.imageProfiles {
