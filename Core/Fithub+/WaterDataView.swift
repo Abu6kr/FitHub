@@ -6,60 +6,140 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WaterDataView: View {
     
     
-    @State private var percent = 50.0
+    @State private var percent = 0
 
     let columns = [
         GridItem(.flexible(minimum: 40)),
         GridItem(.flexible(minimum: 40)),
-        GridItem(.flexible(minimum: 40)),
-        GridItem(.flexible(minimum: 40)),
+        
     ]
+    @State private var ListWther: [String] = []
+    
+    @State private var DrinkWather: Int = 0
+    
+    @State private var onDelete: Bool = false
+    @State private var SectionwatherStlys: watherStlys = .Cup
     
     var body: some View {
         VStack {
-            
-            CircleWaveView(percent: Int(self.percent))
+          
+           
+            CircleWaveView(percent: Int(self.DrinkWather))
                 .frame(height: 250)
                 .padding(.all)
+          
+//                ForEach(moldeWather) { wathr in
+//                    HStack {
+//                        Text(wathr.DrinkWather)
+//                            .foregroundStyle(Color.white)
+//                        switch SectionwatherStlys {
+//                        case .Cup:
+//                            Image("Cup")
+//                                .resizable()
+//                                .frame(width: 20,height: 30)
+//                        case .bottle:
+//                            Image("bottle")
+//                                .resizable()
+//                                .frame(width: 20,height: 30)
+//                        }
+//
+//               
+//                        Spacer()
+//                    }
+//                }.onDelete(perform: removeRows)
+//                    .padding(.horizontal)
+         
+            
+          
+         
+//            HStack {
+//                TextField("Wather", value: $DrinkWather,formatter: NumberFormatter())
+//                    .foregroundStyle(Color.white)
+//                Spacer()
+//                if DrinkWather != 0 {
+//                    Button(action: {
+//                       
+//                    }) {
+//                        Text("add")
+//                    }
+//                }
+//            }
+//                .padding(.all)
+//                .background(Color.themeView.background2)
+//                .clipShape(.rect(cornerRadius: 22))
+//                .padding(.all)
             
             SectionaddWater
         }
+        
     }
+    func removeRows(at offsets: IndexSet) {
+        ListWther.remove(atOffsets: offsets)
+    }
+    
+
 }
 
 #Preview {
     ZStack {
         Color.black.ignoresSafeArea(.all)
         WaterDataView()
+            .preferredColorScheme(.dark)
     }
 }
+
+enum watherStlys {
+    case Cup
+    case bottle
+}
+
+
+
+
 
 extension WaterDataView {
     
     private var SectionaddWater: some View {
         VStack {
-            HStack {
-                Slider(value: self.$percent, in: 0...100)
-                    .foregroundStyle(Color.themeView.activityValueText)
-            }.padding(.all)
-            .background(Color.themeView.background2)
-            .clipShape(.rect(cornerRadius: 10))
-            .padding(.horizontal)
             
             LazyVGrid(columns: columns,alignment: .center){
-                ForEach(0 ..< 5) { item in
+                Button(action: {
+                    ListWther.append(String(0.236588))
+                }){
                     HStack {
-                        Text("1,5")
+                        Image("Cup")
+                            .resizable()
+                            .frame(width: 20,height: 30)
+                        Text("Cubs")
                             .foregroundStyle(Color.themeView.activityValueText)
                     }.padding(.all)
-                    .background(Color.themeView.background2)
-                    .clipShape(.rect(cornerRadius: 10))
-                    .padding(.horizontal)
+                        .frame(height: 50)
+                        .background(Color.themeView.background2)
+                        .clipShape(.rect(cornerRadius: 10))
                 }
+          
+                Button(action: {
+                    ListWther.append(String(1))
+                }) {
+                    HStack {
+                        Image("bottle")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 10,height: 40)
+                        Text("bottle")
+                            .foregroundStyle(Color.themeView.activityValueText)
+                    }.padding(.all)
+                        .frame(height: 50)
+                        .background(Color.themeView.background2)
+                        .clipShape(.rect(cornerRadius: 10))
+                        .padding(.horizontal)
+                }
+          
             }
        
         }

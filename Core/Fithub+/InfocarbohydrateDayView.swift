@@ -11,25 +11,51 @@ struct InfocarbohydrateDayView: View {
     @ObservedObject var vmUser = UserInfoViewModel()
     var body: some View {
         ZStack {
-            Color.themeView.background.ignoresSafeArea(.all)
+            Color.themeView.background2.ignoresSafeArea(.all)
             VStack {
+                
                 Text("\(vmUser.currentUserCaloresDay)")
-                    .font(.system(size: 22,weight: .bold))
-                    .padding(.all)
+                    .frame(width: 200)
+                    .font(.system(size: 50,weight: .semibold))
+                    .foregroundStyle(Color.themeView.secondaryText)
+                    .background(
+                        RoundedRectangle(cornerRadius: 22)
+                            .stroke(lineWidth: 2)
+                    )
+                    .background(Color.themeView.background2)
+                    .clipShape(.rect(cornerRadius: 22))
                 HStack(alignment: .center,spacing: 22) {
                     VStack {
-                        Text("50%")
+                        Text("50 %")
                         Text("proteins")
-                    }
+                    }.padding(.all)
+                    .background(
+                        RoundedRectangle(cornerRadius: 22)
+                            .stroke(lineWidth: 2)
+                    )
+                    .background(Color.themeView.background2)
+                    .clipShape(.rect(cornerRadius: 22))
                     VStack {
-                        Text("40%")
+                        Text("40 %")
                         Text("fats")
-                    }
+                    }.padding(.all)
+                        .background(
+                            RoundedRectangle(cornerRadius: 22)
+                                .stroke(lineWidth: 2)
+                        )
+                        .background(Color.themeView.background2)
+                        .clipShape(.rect(cornerRadius: 22))
                     VStack {
-                        Text("50%")
-                        Text("carbohydrates")
-                    }
-                }                      
+                        Text("50 %")
+                        Text("carbs")
+                    }.padding(.all)
+                        .background(
+                            RoundedRectangle(cornerRadius: 22)
+                                .stroke(lineWidth: 2)
+                        )
+                        .background(Color.themeView.background2)
+                        .clipShape(.rect(cornerRadius: 22))
+                }
             
             }.foregroundStyle(Color.white)
 

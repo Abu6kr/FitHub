@@ -11,6 +11,10 @@ import SwiftUI
 class UserInfoViewModel: ObservableObject {
     
     
+    
+    @Published var cruuentWeek: [Date] = []
+    @Published var cruuentDay: Date = Date()
+    
     @Published var wakeUpTime: Date = UserDefaults.standard.object(forKey: "wakeUpTime") as? Date ?? Date() {
             didSet {
                 UserDefaults.standard.set(self.wakeUpTime, forKey: "wakeUpTime")
@@ -88,6 +92,36 @@ class UserInfoViewModel: ObservableObject {
         } catch {
             print("Unable to load image data from disk", error)
         }
+    }
+    
+    func exteactCuetData() {
+        let calendar = Calendar.current
+        let weake = calendar.dateInterval(of: .weekOfMonth, for: Date())
+        
+        guard let firtDay = weake?.start else {
+            return
+        }
+        (0..<7).forEach { day in
+            if let weakeDay = calendar.date(byAdding: .day, value: day, to: firtDay){
+                cruuentWeek.append(weakeDay)
+            }
+        }
+    }
+    
+    func extracDate(date: Date) -> String {
+        let formter  = DateFormatter()
+        formter.dateFormat = (isSameDay(date1: cruuentDay, date2: date) ? "EEEE dd MMM " : "dd" )
+        return (isDateToday(date: date) && isSameDay(date1: cruuentDay, date2: date) ? "" : "") + formter.string(from: date)
+    }
+    
+    func isDateToday(date: Date) -> Bool {
+        let calendar =  Calendar.current
+        return calendar.isDateInToday(date)
+    }
+    
+    func isSameDay(date1: Date,date2: Date) -> Bool {
+        let calendar =  Calendar.current
+        return calendar.isDate(date1, inSameDayAs: date2)
     }
     
 }
