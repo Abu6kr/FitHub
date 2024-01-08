@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import Charts
+
+
 
 struct FitHubView: View {
     
@@ -23,23 +26,68 @@ struct FitHubView: View {
         GridItem(.flexible(minimum: 40)),
     ]
     
+    
+    let measurement = [
+         Measurement(id: "1", date: 2.0, amount: 11.0),
+         Measurement(id: "2", date: 4.0, amount: 22.0),
+         Measurement(id: "3", date: 6.0, amount: 38.0),
+         Measurement(id: "4", date: 8.0, amount: 45.0),
+         Measurement(id: "5", date: 10.0, amount: 30.0),
+         Measurement(id: "6", date: 12.0, amount: 57.0),
+         Measurement(id: "7", date: 14.0, amount: 26.0)
+     ]
+     
+     @State var selected = "0"
+    func tapSymbol(at location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) {
+         let xPos = location.x - geometry[proxy.plotAreaFrame].origin.x
+         let yPos = location.y - geometry[proxy.plotAreaFrame].origin.y
+         if let pos: (Double, Double) = proxy.value(at: CGPoint(x: xPos, y: yPos)) {
+             let results = measurement.filter{ $0.isAround(x: pos.0, y: pos.1) }
+             if let firstId = results.first?.id {
+                 selected = firstId
+             }
+         }
+     }
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(colors: [Color.themeView.background2.opacity(0.6),Color.themeView.background2.opacity(0.6)], startPoint: .top, endPoint: .bottom).ignoresSafeArea(.all)
+                Color.themeView.background.ignoresSafeArea(.all)
                 ScrollView {
                     VStack {
                         
-
-                        TabBarNavigtionCutems
-                        
-
-                        NavigationLink {
-                            InfocarbohydrateDayView()
-                        } label: {
-                            TabViewCaloresDayView(vmUser: vmUser)
-                        }
-
+                        NavigationTobBarView(nameView: "HomeFit", SectionIcone: .HomeFitHub, ShoeImage: true)
+                    
+                        VStack(alignment: .leading,spacing: 20) {
+                            Text("Your daliy health statices")
+                                .font(.system(size: 15,weight: .regular))
+                            
+                            Chart {
+                                ForEach(measurement) { chartItem in
+                                    AreaMark(
+                                        x: .value("Date", chartItem.date),
+                                        y: .value("Amount", chartItem.amount)
+                                    )  .foregroundStyle(Color(red: 0.702, green: 0.025, blue: 0.673).opacity(0.3))
+                                    LineMark(
+                                        x: .value("Date", chartItem.date),
+                                        y: .value("Amount", chartItem.amount)
+                                    )  .foregroundStyle(Color(red: 0.702, green: 0.025, blue: 0.673))
+                                    .symbol {
+                                        Circle().fill(selected == chartItem.id ? Color.white : Color.red).opacity(0.6).frame(width: 10)
+                                    }
+                                }
+                            }  .chartOverlay { proxy in
+                                GeometryReader { geometry in
+                                    ZStack(alignment: .top) {
+                                        Rectangle().fill(.clear).contentShape(Rectangle())
+                                            .onTapGesture { location in
+                                                tapSymbol(at: location, proxy: proxy, geometry: geometry)
+                                            }
+                                    }
+                                }
+                            }
+                            .frame(height: 150)
+                            
+                        }.padding(.all,10)
                         
                         
                         LazyVGrid(columns: columns,alignment: .center){
@@ -52,29 +100,18 @@ struct FitHubView: View {
                                 ActivtyCstmesView(activty: item.value)
                             }
                         }.padding(.top)
+                  
                         
-                        TabBarNavigtionFood(SectionTabFood: $SectionTabFood)
                         
-                        switch SectionTabFood {
-                            case .food:
-                                FoodMealsDayView()
-                            case .water:
-                                WaterDataView()
-                            case .reading:
-                                Text("Rading")
-                        }
+
                         
                     }.padding(.bottom,150)
                 }
-                TabBarCamer
+//                TabBarCamer
                 
             }
             
             .onAppear {
-                vmUser.loadImage(forKey: "imagePrilesKeySaved")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    withAnimation(.spring){ showScanner = true }
-                }
                 healthManger.fatechTodaySteps()
                 healthManger.fatechTodayCalores()
             }
@@ -86,13 +123,23 @@ struct FitHubView: View {
 #Preview {
     FitHubView()
         .environmentObject(HealthManger())
-        .preferredColorScheme(.dark)
 }
 
 
 
 
-
+struct Measurement: Identifiable {
+    var id: String
+    var date: Double
+    var amount: Double
+    
+    static let dx: CGFloat = 0.5  // <--- adjust as required
+    static let dy: CGFloat = 2.0  // <--- adjust as required
+    
+    func isAround(x: CGFloat, y: CGFloat) -> Bool {
+        return date <= (x + Measurement.dx) && date >= (x - Measurement.dx) && amount <= (y + Measurement.dy) && amount >= (y - Measurement.dy)
+    }
+}
 
 extension FitHubView {
     
@@ -121,10 +168,7 @@ extension FitHubView {
                     }
                 }
                 Spacer()
-                
-                Text(Date.now, format: .dateTime.day().month().year())
-                    .foregroundStyle(Color.gray)
-                    .font(.system(size: 14,weight: .regular))
+
                 
                 Image(systemName: "bell")
                     .font(.system(size: 15,weight: .regular))
@@ -132,6 +176,7 @@ extension FitHubView {
                     .background(
                         RoundedRectangle(cornerRadius: .infinity)
                             .stroke(lineWidth: 1.0)
+                            .foregroundStyle(Color.theme.Gray03.opacity(0.5))
                     )
                     .padding(.horizontal)
             }

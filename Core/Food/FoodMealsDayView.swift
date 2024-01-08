@@ -35,13 +35,13 @@ struct FoodMealsDayView: View {
                 }.padding(.all)
                     .frame(maxWidth: .infinity)
                     .background(
-                        RoundedRectangle(cornerRadius: 15)
+                        RoundedRectangle(cornerRadius: 20)
                             .stroke(lineWidth: 2)
                             .foregroundStyle(Color.theme.Gray02.opacity(0.2))
                             .shadow(color: .black.opacity(0.1), radius: 1)
                     )
-                    .background(Color.theme.Gray07)
-                    .clipShape(.rect(cornerRadius: 15))
+                    .background(Color(red: 0.957, green: 0.957, blue: 0.957))
+                    .clipShape(.rect(cornerRadius: 20))
                     .padding(.horizontal,10)
             }
         }
@@ -50,7 +50,7 @@ struct FoodMealsDayView: View {
 
 #Preview {
     ZStack {
-        Color.black.ignoresSafeArea(.all)
         FoodMealsDayView()
+         
     }
 }

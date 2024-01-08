@@ -44,7 +44,7 @@ struct AccountView: View {
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
         AccountView(vmUser: UserInfoViewModel())
-            .preferredColorScheme(.dark)
+           
     }
 }
 
@@ -75,7 +75,7 @@ extension AccountView {
             
             Text(vmUser.currentUserName)
                 .font(.system(size: 18,weight: .regular))
-                .foregroundStyle(Color.white)
+                .foregroundStyle(Color.themeView.secondaryText)
                 .matchedGeometryEffect(id: "UserName", in: AccountName)
             Spacer()
             Button {
@@ -85,19 +85,18 @@ extension AccountView {
             } label: {
                 Image(systemName: "pencil.line")
                     .font(.system(size: 22, weight: .regular))
-                    .foregroundStyle(Color.themeView.activityValueText)
+                    .foregroundStyle(Color.themeView.secondaryText)
                     .padding(.trailing)
             }
             .matchedGeometryEffect(id: "AccountDissmias", in: AccountDissmias)
-            
             
         }.padding(.all,10)
             .background(
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(lineWidth: 1)
-                    .foregroundStyle(Color.white.opacity(0.1))
+                    .foregroundStyle(Color.gray)
             )
-            .background(Color.theme.Gray06)
+            .background(Color.theme.Gray02)
             .clipShape(.rect(cornerRadius: 10))
 
     }
@@ -167,7 +166,7 @@ extension AccountView {
                 TextField("AboBakr", text: $vmUser.currentUserName)
                     .frame(height: 50)
                     .padding(.leading)
-                    .background(Color.theme.Gray06)
+                    .background(Color.theme.Gray02)
                     .foregroundStyle(Color.themeView.secondaryText)
                     .clipShape(.rect(cornerRadius: 10))
             }.matchedGeometryEffect(id: "UserName", in: AccountName)
@@ -175,7 +174,7 @@ extension AccountView {
             Button(action: {
                 vmUser.saveImage(imageName: "imagePrilesKeySaved", image: image, key: "imagePrilesKeySaved")
             }){
-                ButtonView(title: "Save Image", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
+                ButtonView(title: "Save Image", background: Color.theme.Gray02, foregroundStyle: Color.themeView.secondaryText)
                     .matchedGeometryEffect(id: "AccountName", in: AccountName)
             }
 
@@ -192,7 +191,7 @@ extension AccountView {
                         .foregroundStyle(Color.themeView.secondaryText)
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .foregroundStyle(Color.theme.Gray02)
+                        .foregroundStyle(Color.themeView.secondaryText)
 
                 }
             }
@@ -205,7 +204,7 @@ extension AccountView {
                         .foregroundStyle(Color.themeView.secondaryText)
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .foregroundStyle(Color.theme.Gray02)
+                        .foregroundStyle(Color.themeView.secondaryText)
 
                 }
             }
@@ -219,7 +218,7 @@ extension AccountView {
 
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .foregroundStyle(Color.theme.Gray02)
+                        .foregroundStyle(Color.themeView.secondaryText)
 
                 }
             }
@@ -229,9 +228,9 @@ extension AccountView {
         .background(
             RoundedRectangle(cornerRadius: 10)
                 .stroke(lineWidth: 1)
-                .foregroundStyle(Color.white.opacity(0.1))
+                .foregroundStyle(Color.themeView.secondaryText.opacity(0.3))
         )
-        .background(Color.theme.Gray06)
+        .background(Color.theme.Gray02)
         .clipShape(.rect(cornerRadius: 10))
         .padding(.horizontal)
 

@@ -15,27 +15,27 @@ struct TabViewCaloresDayView: View {
             VStack(alignment: .leading,spacing: 20) {
                 
                 Text("Consumed today")
-                    .font(.system(size: 15,weight: .regular))
+                    .font(.system(size: 15,weight: .light))
                     .foregroundStyle(Color.themeView.activityValueText)
                 
                 HStack {
                     Text("\(dayCapes)")
-                        .foregroundStyle(Color.themeView.activityValueText)
+                        .foregroundStyle(Color.themeView.secondaryText)
                     Text("/ \(vmUser.currentUserCaloresDay) Kcal")
-                        .foregroundStyle(Color.themeView.activityValueText.opacity(0.5))
+                        .foregroundStyle(Color.themeView.activityValueText)
                     
-                }.font(.system(size: 22,weight: .semibold))
+                }.font(.system(size: 22,weight: .light))
                 
                 ZStack {
                     Rectangle()
                         .frame(height: 5)
                         .clipShape(.rect(cornerRadius: 10))
-                        .foregroundStyle(Color.theme.Red.opacity(0.5))
+                        .foregroundStyle(Color.theme.Gray.opacity(0.3))
                     
                     Rectangle()
                         .frame(height: 5)
-                        .frame(width: 100)
-                        .foregroundStyle(Color.theme.Red)
+                        .frame(width: 300)
+                        .foregroundStyle(Color(red: 0.702, green: 0.025, blue: 0.673))
                         .clipShape(.rect(cornerRadius: 10))
                         .frame(maxWidth: .infinity,alignment:.leading)
                     
@@ -43,13 +43,13 @@ struct TabViewCaloresDayView: View {
             }.padding(.all)
                 .frame(maxWidth: .infinity)
                 .background(
-                    RoundedRectangle(cornerRadius: 15)
+                    RoundedRectangle(cornerRadius: 20)
                         .stroke(lineWidth: 2)
                         .foregroundStyle(Color.theme.Gray02.opacity(0.2))
                         .shadow(color: .black.opacity(0.1), radius: 1)
                 )
-                .background(Color.theme.Gray07)
-                .clipShape(.rect(cornerRadius: 15))
+                .background(Color.theme.Gray02)
+                .clipShape(.rect(cornerRadius: 20))
                 .padding(.horizontal,10)
         }
     }
@@ -72,7 +72,7 @@ struct ActivtyCstmesView: View {
             VStack(alignment: .leading) {
                 Text(activty.title)
                     .font(.system(size: 15,weight: .semibold))
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(Color.themeView.secondaryText)
             }
             
             HStack {
@@ -90,8 +90,15 @@ struct ActivtyCstmesView: View {
             
         }.padding(.all,10)
             .frame(maxWidth: .infinity)
-            .background(Color.theme.Gray07)
-            .clipShape(.rect(cornerRadius: 12))
+            .padding(.all,5)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(lineWidth: 1)
+                    .foregroundColor(Color.gray.opacity(0.4))
+            )
+            .background(Color.white)
+
+            .clipShape(.rect(cornerRadius: 20))
             .padding(.horizontal,10)
     }
 }
