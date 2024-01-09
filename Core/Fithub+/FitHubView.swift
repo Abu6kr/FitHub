@@ -139,10 +139,7 @@ struct FitHubView: View {
                         
                         
                         LazyVGrid(columns: columns,alignment: .center){
-                            
-                            //MARK: Tesing Data How Show
-                            ActivtyCstmesView(activty: Activty(id: 0, title: "Step Day", subtitle: "7938", image: "figure.walk", amount: "1000"))
-                            ActivtyCstmesView(activty:Activty(id: 0, title: "Today Calories", subtitle: "Goal 900", image: "flame", amount: "1079"))
+                            Wather
                             
                             ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
                                 ActivtyCstmesView(activty: item.value)
@@ -150,16 +147,14 @@ struct FitHubView: View {
                         }.padding(.top)
                   
                         
-                        
 
                         
                     }.padding(.bottom,150)
                 }
-//                TabBarCamer
-                
             }
             
             .onAppear {
+                vmUser.loadImage(forKey: "imagePrilesKeySaved")
                 healthManger.fatechTodaySteps()
                 healthManger.fatechTodayCalores()
                 vmUser.exteactCuetData()
@@ -273,6 +268,47 @@ extension FitHubView {
             .offset(y: showScanner ? 0 : 600)
             .opacity(showScanner ? 1 : 0)
             .fullScreenCover(isPresented: $showfullScaner){ FoodScannerView() }
+    }
+    
+    
+    private var Wather: some View {
+        VStack(alignment: .leading) {
+            
+            VStack(alignment: .leading) {
+                Text("Wather")
+                    .font(.system(size: 15,weight: .regular))
+                    .foregroundStyle(Color.black)
+            }
+            Spacer()
+            VStack(alignment: .leading,spacing: 10) {
+                
+                Text("95")
+                    .foregroundStyle(Color.black)
+                    .font(.system(size: 25,weight: .regular))
+                
+                Image("Cup")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 20,height: 20)
+                    .foregroundStyle(Color.gray)
+                    .padding(.leading,5)
+          
+            }.frame(maxWidth: .infinity,alignment: .leading)
+                .padding(.vertical,8)
+            
+        }.padding(.all,10)
+            .frame(maxWidth: .infinity)
+            .frame(height: 150)
+            .padding(.all,5)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(lineWidth: 1)
+                    .foregroundColor(Color.gray.opacity(0.4))
+            )
+            .background(Color(red: 0.957, green: 0.957, blue: 0.957))
+            .clipShape(.rect(cornerRadius: 20))
+            .padding(.horizontal,10)
+
     }
 
 }

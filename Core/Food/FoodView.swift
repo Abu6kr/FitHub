@@ -42,7 +42,7 @@ struct FoodView: View {
             }
         }
         .onAppear {
-//            vmUser.loadImage(forKey: "imagePrilesKeySaved")
+            vmUser.loadImage(forKey: "imagePrilesKeySaved")
             healthManger.fatechTodaySteps()
             healthManger.fatechTodayCalores()
         }

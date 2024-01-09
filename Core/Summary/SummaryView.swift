@@ -16,7 +16,7 @@ struct SummaryView: View {
             Summary(safeArea: safeArea, size: size)
                 .ignoresSafeArea(.container, edges: .top)
         }
-        .preferredColorScheme(.dark)
+       
     }
 }
 

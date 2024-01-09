@@ -71,33 +71,34 @@ struct ActivtyCstmesView: View {
             
             VStack(alignment: .leading) {
                 Text(activty.title)
-                    .font(.system(size: 15,weight: .semibold))
-                    .foregroundStyle(Color.themeView.secondaryText)
+                    .font(.system(size: 15,weight: .regular))
+                    .foregroundStyle(Color.black)
             }
-            
-            HStack {
-              
-                Image(systemName: activty.image)
-                    .font(.system(size: 18,weight: .regular))
-                    .foregroundStyle(Color.green)
-                    .padding(.leading,5)
+            Spacer()
+            VStack(alignment: .leading,spacing: 10) {
                 
                 Text(activty.amount)
-                    .foregroundStyle(Color.themeView.activityValueText)
+                    .foregroundStyle(Color.black)
+                    .font(.system(size: 25,weight: .regular))
+                
+                Image(systemName: activty.image)
                     .font(.system(size: 18,weight: .regular))
+                    .foregroundStyle(Color.gray)
+                    .padding(.leading,5)
+          
             }.frame(maxWidth: .infinity,alignment: .leading)
                 .padding(.vertical,8)
             
         }.padding(.all,10)
             .frame(maxWidth: .infinity)
+            .frame(height: 150)
             .padding(.all,5)
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(lineWidth: 1)
                     .foregroundColor(Color.gray.opacity(0.4))
             )
-            .background(Color.white)
-
+            .background(Color(red: 0.957, green: 0.957, blue: 0.957))
             .clipShape(.rect(cornerRadius: 20))
             .padding(.horizontal,10)
     }

@@ -89,11 +89,13 @@ struct TabBarViewCustems: View {
                             )
                     )
                     .background(Color.themeView.background)
-                
                     .clipShape(.rect(cornerRadius: 30))
                     .padding(.horizontal,10)
              
             }.frame(maxHeight:.infinity,alignment: .bottom)
+        }
+        .onAppear {
+            vmUser.loadImage(forKey: "imagePrilesKeySaved")
         }
       
     }

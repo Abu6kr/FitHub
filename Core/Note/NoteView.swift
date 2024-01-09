@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NoteView: View {
+   @ObservedObject var vmUser = UserInfoViewModel()
     var body: some View {
         NavigationView {
             ZStack {

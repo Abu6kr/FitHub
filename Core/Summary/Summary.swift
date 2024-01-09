@@ -63,16 +63,17 @@ struct Summary: View {
                         
                         // MARK: - Gradient Overlay
                         Rectangle()
-                            .fill(
-                                .linearGradient(colors: [
-                                    .black.opacity(0 - progress),
-                                    .black.opacity(0.1 - progress),
-                                    .black.opacity(0.3 - progress),
-                                    .black.opacity(0.5 - progress),
-                                    .black.opacity(0.8 - progress),
-                                    .black.opacity(1),
-                                ], startPoint: .top, endPoint: .bottom)
-                            )
+                            .foregroundStyle(Color.white)
+//                            .fill(
+//                                .linearGradient(colors: [
+//                                    .black.opacity(0 - progress),
+//                                    .black.opacity(0.1 - progress),
+//                                    .black.opacity(0.3 - progress),
+//                                    .black.opacity(0.5 - progress),
+//                                    .black.opacity(0.8 - progress),
+//                                    .black.opacity(1),
+//                                ], startPoint: .top, endPoint: .bottom)
+//                            )
                         VStack(spacing: 0) {
                             Text("Summary")
                                 .font(.system(size: 45))
@@ -133,7 +134,7 @@ struct Summary: View {
             .padding(.top, safeArea.top + 10)
             .padding([.horizontal,.bottom], 15)
             .background(
-                Color.black
+                Color.white
                     .opacity(-progress > 1 ? 1 : 0)
             )
             .offset(y: -minY)

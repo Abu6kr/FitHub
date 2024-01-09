@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct CommunityView: View {
+    @ObservedObject var vmUser = UserInfoViewModel()
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 ScrollView {
                     VStack {
-                        NavigationTobBarView(nameView: "Community", SectionIcone: .Community, ShoeImage: false)
+                        NavigationTobBarView(vmUser: vmUser,nameView: "Community", SectionIcone: .Community, ShoeImage: false)
                     }
                 }
             }
