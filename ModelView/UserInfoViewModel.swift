@@ -108,9 +108,17 @@ class UserInfoViewModel: ObservableObject {
         }
     }
     
+    func getDateFormat(date: Date) -> String {
+        let formaterDate = DateFormatter()
+        formaterDate.dateFormat = (isSameDay(date1: cruuentDay, date2: date) ? "dd" : "dd" )
+        
+        return (isDateToday(date: date) && isSameDay(date1: cruuentDay, date2: date) ? "" : "") + formaterDate.string(from: date)
+        
+    }
     func extracDate(date: Date) -> String {
         let formter  = DateFormatter()
-        formter.dateFormat = (isSameDay(date1: cruuentDay, date2: date) ? "EEEE dd MMM " : "dd" )
+        formter.dateFormat = (isSameDay(date1: cruuentDay, date2: date) ? "E dd" : "E dd" )
+//        formter.dateFormat = (isSameDay(date1: cruuentDay, date2: date) ? "MMM " : "dd" )
         return (isDateToday(date: date) && isSameDay(date1: cruuentDay, date2: date) ? "" : "") + formter.string(from: date)
     }
     

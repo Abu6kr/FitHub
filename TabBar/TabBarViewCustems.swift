@@ -22,16 +22,16 @@ struct TabBarViewCustems: View {
             
             Group {
                 switch sectionTabBar {
-                case .HomeFitHub:
-                   FitHubView()
-                case .WorkOut:
-                    SummaryView()
-                case .Food:
-                   FoodView()
-                case .Note:
-                    Text("Note")
-                case .Community:
-                    CommunityView()
+                    case .HomeFitHub:
+                        FitHubView()
+                    case .WorkOut:
+                        SummaryView()
+                    case .Food:
+                        FoodView()
+                    case .Note:
+                        NoteView()
+                    case .Community:
+                        CommunityView()
                 }
             }
             

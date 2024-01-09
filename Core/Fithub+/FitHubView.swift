@@ -28,16 +28,17 @@ struct FitHubView: View {
     
     
     let measurement = [
-         Measurement(id: "1", date: 2.0, amount: 11.0),
+         Measurement(id: "0", date: 0.0, amount: 40.0),
+         Measurement(id: "1", date: 2.0, amount: 25.0),
          Measurement(id: "2", date: 4.0, amount: 22.0),
          Measurement(id: "3", date: 6.0, amount: 38.0),
          Measurement(id: "4", date: 8.0, amount: 45.0),
          Measurement(id: "5", date: 10.0, amount: 30.0),
-         Measurement(id: "6", date: 12.0, amount: 57.0),
-         Measurement(id: "7", date: 14.0, amount: 26.0)
+         Measurement(id: "6", date: 14.0, amount: 26.0)
      ]
      
      @State var selected = "0"
+    
     func tapSymbol(at location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) {
          let xPos = location.x - geometry[proxy.plotAreaFrame].origin.x
          let yPos = location.y - geometry[proxy.plotAreaFrame].origin.y
@@ -48,6 +49,7 @@ struct FitHubView: View {
              }
          }
      }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -57,6 +59,51 @@ struct FitHubView: View {
                         
                         NavigationTobBarView(nameView: "HomeFit", SectionIcone: .HomeFitHub, ShoeImage: true)
                     
+                        
+                        VStack {
+                            HStack {
+                                Text("Workouts Plan")
+                                    .font(.system(size: 18,weight: .regular))
+                                Spacer()
+                                Text("May")
+                                    .font(.system(size: 15,weight: .regular))
+                                Image(systemName: "chevron.down")
+                                    .font(.system(size: 15,weight: .regular))
+                            }.padding(.init(top: 10, leading: 10, bottom: 0, trailing: 10))
+                            
+                            ScrollView(.horizontal,showsIndicators: false) {
+                                HStack(spacing: 5) {
+                                
+                                    ForEach(vmUser.cruuentWeek,id: \.self) { data in
+                                        VStack {
+                                            Text(vmUser.extracDate(date: data).prefix(1))
+                                                .font(.system(size: 14,weight:.regular))
+                                                .foregroundStyle(vmUser.isSameDay(date1:vmUser.cruuentDay , date2: data) ? Color.white :  Color.gray)
+                                            Text(vmUser.getDateFormat(date: data))
+                                                .font(.system(size: 18,weight: .regular))
+                                        }
+                                            .foregroundStyle(vmUser.isSameDay(date1:vmUser.cruuentDay , date2: data) ? Color.white :  Color.black)
+                                            .multilineTextAlignment(.center)
+                                            .padding(.all,10)
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 20)
+                                                    .stroke(lineWidth: 1)
+                                                    .foregroundStyle(Color.theme.Gray03.opacity(0.4))
+                                            )
+                                            .background(vmUser.isSameDay(date1:vmUser.cruuentDay , date2: data) ? Color.black :  Color.white)
+                                            .clipShape(.rect(cornerRadius: 20))
+                                            .frame(width: 50,height: 90)
+                                            .onTapGesture {
+                                                withAnimation {
+                                                    vmUser.cruuentDay = data
+                                                }
+                                            }
+
+                                    }
+                                }.padding(.horizontal,10)
+                            }
+                        }
+                        
                         VStack(alignment: .leading,spacing: 20) {
                             Text("Your daliy health statices")
                                 .font(.system(size: 15,weight: .regular))
@@ -66,7 +113,7 @@ struct FitHubView: View {
                                     AreaMark(
                                         x: .value("Date", chartItem.date),
                                         y: .value("Amount", chartItem.amount)
-                                    )  .foregroundStyle(Color(red: 0.702, green: 0.025, blue: 0.673).opacity(0.3))
+                                    )  .foregroundStyle(Color(red: 0.702, green: 0.025, blue: 0.673).opacity(0.07))
                                     LineMark(
                                         x: .value("Date", chartItem.date),
                                         y: .value("Amount", chartItem.amount)
@@ -75,7 +122,8 @@ struct FitHubView: View {
                                         Circle().fill(selected == chartItem.id ? Color.white : Color.red).opacity(0.6).frame(width: 10)
                                     }
                                 }
-                            }  .chartOverlay { proxy in
+                            } 
+                                .chartOverlay { proxy in
                                 GeometryReader { geometry in
                                     ZStack(alignment: .top) {
                                         Rectangle().fill(.clear).contentShape(Rectangle())
@@ -114,6 +162,7 @@ struct FitHubView: View {
             .onAppear {
                 healthManger.fatechTodaySteps()
                 healthManger.fatechTodayCalores()
+                vmUser.exteactCuetData()
             }
 
         }
@@ -168,7 +217,6 @@ extension FitHubView {
                     }
                 }
                 Spacer()
-
                 
                 Image(systemName: "bell")
                     .font(.system(size: 15,weight: .regular))
