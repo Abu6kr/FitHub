@@ -44,7 +44,7 @@ class HealthManger: ObservableObject {
         let predicate = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
         let query = HKStatisticsQuery(quantityType: steps, quantitySamplePredicate: predicate) { _, result, error in
             guard let quanity = result?.sumQuantity(), error == nil else {
-                print("error fatching today step data")
+//                print("error fatching today step data")
                 return
             }
             let stepConut = quanity.doubleValue(for: .count())

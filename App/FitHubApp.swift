@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct FitHubApp: App {
     @StateObject var healthManger = HealthManger()
+    @StateObject var vmUser = UserInfoViewModel()
     @AppStorage("isOnboarding") var isOnboarding: Bool = true
     
     var body: some Scene {
@@ -20,6 +21,7 @@ struct FitHubApp: App {
                 
             } else {
                 TabBarViewCustems()
+                    .environmentObject(vmUser)
                     .environmentObject(healthManger)
                     .preferredColorScheme(.light)
             }

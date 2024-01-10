@@ -53,7 +53,6 @@ struct TabBarViewCustems: View {
                 }
                     .frame(height: 50)
                     .frame(maxWidth: .infinity)
-                
                     .background(
                         RoundedRectangle(cornerRadius: 30)
                             .stroke(lineWidth: 1)
@@ -105,6 +104,7 @@ struct TabBarViewCustems_Previews: PreviewProvider {
     static var previews: some View {
         TabBarViewCustems()
             .environmentObject(HealthManger())
+            .environmentObject(UserInfoViewModel())
             .previewLayout(.sizeThatFits)
     }
 }

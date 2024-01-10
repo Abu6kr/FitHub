@@ -63,19 +63,19 @@ struct Summary: View {
                         
                         // MARK: - Gradient Overlay
                         Rectangle()
-                            .foregroundStyle(Color.white)
-//                            .fill(
-//                                .linearGradient(colors: [
-//                                    .black.opacity(0 - progress),
-//                                    .black.opacity(0.1 - progress),
-//                                    .black.opacity(0.3 - progress),
-//                                    .black.opacity(0.5 - progress),
-//                                    .black.opacity(0.8 - progress),
-//                                    .black.opacity(1),
-//                                ], startPoint: .top, endPoint: .bottom)
-//                            )
+//                            .foregroundStyle(Color.white)
+                            .fill(
+                                .linearGradient(colors: [
+                                    .white.opacity(0 - progress),
+                                    .white.opacity(0.1 - progress),
+                                    .white.opacity(0.3 - progress),
+                                    .white.opacity(0.5 - progress),
+                                    .white.opacity(0.8 - progress),
+                                    .white.opacity(1),
+                                ], startPoint: .top, endPoint: .bottom)
+                            )
                         VStack(spacing: 0) {
-                            Text("Summary")
+                            Text("WorkOut")
                                 .font(.system(size: 45))
                                 .fontWeight(.bold)
                                 .multilineTextAlignment(.center)
@@ -125,14 +125,17 @@ struct Summary: View {
 
             }
             .overlay(content: {
-                Text("Summary")
-                    .fontWeight(.semibold)
-                    .offset(y: -titleProgress > 0.75 ? 0 : 45)
+                NavigationTobBarView(nameView: "WorkOut", SectionIcone: .WorkOut, ShoeImage: false)
+//                Text("WorkOut")
+//                    .fontWeight(.semibold)
+                    .offset(y: -titleProgress > 0.75 ? 0 : 85)
                     .clipped()
                     .animation(.easeOut(duration: 0.25), value: -titleProgress > 0.75)
             })
             .padding(.top, safeArea.top + 10)
             .padding([.horizontal,.bottom], 15)
+            .padding(.all)
+            
             .background(
                 Color.white
                     .opacity(-progress > 1 ? 1 : 0)

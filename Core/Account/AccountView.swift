@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AccountView: View {
     
-    @ObservedObject var vmUser : UserInfoViewModel
+    @EnvironmentObject var vmUser : UserInfoViewModel
     @State var image = UIImage()
     
     @State private var showSheet = false
@@ -43,7 +43,7 @@ struct AccountView: View {
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView(vmUser: UserInfoViewModel())
+        AccountView()
            
     }
 }

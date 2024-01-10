@@ -59,95 +59,37 @@ struct FitHubView: View {
                         
                         NavigationTobBarView(nameView: "HomeFit", SectionIcone: .HomeFitHub, ShoeImage: true)
                     
-                        
-                        VStack {
-                            HStack {
-                                Text("Workouts Plan")
-                                    .font(.system(size: 18,weight: .regular))
-                                Spacer()
-                                Text("May")
-                                    .font(.system(size: 15,weight: .regular))
-                                Image(systemName: "chevron.down")
-                                    .font(.system(size: 15,weight: .regular))
-                            }.padding(.init(top: 10, leading: 10, bottom: 0, trailing: 10))
-                            
-                            ScrollView(.horizontal,showsIndicators: false) {
-                                HStack(spacing: 5) {
-                                
-                                    ForEach(vmUser.cruuentWeek,id: \.self) { data in
-                                        VStack {
-                                            Text(vmUser.extracDate(date: data).prefix(1))
-                                                .font(.system(size: 14,weight:.regular))
-                                                .foregroundStyle(vmUser.isSameDay(date1:vmUser.cruuentDay , date2: data) ? Color.white :  Color.gray)
-                                            Text(vmUser.getDateFormat(date: data))
-                                                .font(.system(size: 18,weight: .regular))
-                                        }
-                                            .foregroundStyle(vmUser.isSameDay(date1:vmUser.cruuentDay , date2: data) ? Color.white :  Color.black)
-                                            .multilineTextAlignment(.center)
-                                            .padding(.all,10)
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 20)
-                                                    .stroke(lineWidth: 1)
-                                                    .foregroundStyle(Color.theme.Gray03.opacity(0.4))
-                                            )
-                                            .background(vmUser.isSameDay(date1:vmUser.cruuentDay , date2: data) ? Color.black :  Color.white)
-                                            .clipShape(.rect(cornerRadius: 20))
-                                            .frame(width: 50,height: 90)
-                                            .onTapGesture {
-                                                withAnimation {
-                                                    vmUser.cruuentDay = data
-                                                }
-                                            }
+                        TabBarHomeNavigtion
 
-                                    }
-                                }.padding(.horizontal,10)
-                            }
-                        }
-                        
-                        VStack(alignment: .leading,spacing: 20) {
-                            Text("Your daliy health statices")
-                                .font(.system(size: 15,weight: .regular))
-                            
-                            Chart {
-                                ForEach(measurement) { chartItem in
-                                    AreaMark(
-                                        x: .value("Date", chartItem.date),
-                                        y: .value("Amount", chartItem.amount)
-                                    )  .foregroundStyle(Color(red: 0.702, green: 0.025, blue: 0.673).opacity(0.07))
-                                    LineMark(
-                                        x: .value("Date", chartItem.date),
-                                        y: .value("Amount", chartItem.amount)
-                                    )  .foregroundStyle(Color(red: 0.702, green: 0.025, blue: 0.673))
-                                    .symbol {
-                                        Circle().fill(selected == chartItem.id ? Color.white : Color.red).opacity(0.6).frame(width: 10)
-                                    }
-                                }
-                            } 
-                                .chartOverlay { proxy in
-                                GeometryReader { geometry in
-                                    ZStack(alignment: .top) {
-                                        Rectangle().fill(.clear).contentShape(Rectangle())
-                                            .onTapGesture { location in
-                                                tapSymbol(at: location, proxy: proxy, geometry: geometry)
-                                            }
-                                    }
-                                }
-                            }
-                            .frame(height: 150)
-                            
-                        }.padding(.all,10)
-                        
+                        ChartPicerDateColer
                         
                         LazyVGrid(columns: columns,alignment: .center){
+                            
                             Wather
                             
                             ForEach(healthManger.activtys.sorted(by: {$0.value.id < $1.value.id}), id: \.key) { item in
-                                ActivtyCstmesView(activty: item.value)
+                                    ActivtyCstmesView(activty: item.value)
                             }
                         }.padding(.top)
                   
                         
-
+                        VStack(alignment: .leading) {
+                            Text("Traing Workouts")
+                                .font(.system(size: 15,weight: .regular))
+                                .padding(.init(top: 16, leading: 10, bottom: 10, trailing: 16))
+                            
+                            TabBarVidewCutems()
+                            
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text("Daily Task")
+                                .font(.system(size: 15,weight: .regular))
+                                .padding(.init(top: 16, leading: 10, bottom: 10, trailing: 16))
+                            
+                            DailyTaskView()
+                        }
+                        
                         
                     }.padding(.bottom,150)
                 }
@@ -167,6 +109,7 @@ struct FitHubView: View {
 #Preview {
     FitHubView()
         .environmentObject(HealthManger())
+        .environmentObject(UserInfoViewModel())
 }
 
 
@@ -185,49 +128,90 @@ struct Measurement: Identifiable {
     }
 }
 
+
 extension FitHubView {
     
-    private var TabBarNavigtionCutems: some View {
+    
+    private var TabBarHomeNavigtion: some View {
         VStack {
             HStack {
-                NavigationLink {
-                    AccountView(vmUser: vmUser)
-                } label: {
-                    if let image = vmUser.imageProfiles {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 40, height: 40)
-                            .background(Color.red)
-                            .clipShape(Circle())
-                            .padding(.horizontal)
-                    } else if vmUser.imageProfiles == nil {
-                        Image("")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 40, height: 40)
-                            .background(Color.theme.Gray02)
-                            .clipShape(Circle())
-                            .padding(.horizontal)
+                Text("Workouts Plan")
+                    .font(.system(size: 18,weight: .regular))
+                Spacer()
+                Text("May")
+                    .font(.system(size: 15,weight: .regular))
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 15,weight: .regular))
+            }.padding(.init(top: 10, leading: 10, bottom: 0, trailing: 10))
+            
+            ScrollView(.horizontal,showsIndicators: false) {
+                HStack(spacing: 5) {
+                
+                    ForEach(vmUser.cruuentWeek,id: \.self) { data in
+                        VStack {
+                            Text(vmUser.extracDate(date: data).prefix(1))
+                                .font(.system(size: 14,weight:.regular))
+                                .foregroundStyle(vmUser.isSameDay(date1:vmUser.cruuentDay , date2: data) ? Color.white :  Color.gray)
+                            Text(vmUser.getDateFormat(date: data))
+                                .font(.system(size: 18,weight: .regular))
+                        }
+                            .foregroundStyle(vmUser.isSameDay(date1:vmUser.cruuentDay , date2: data) ? Color.white :  Color.black)
+                            .multilineTextAlignment(.center)
+                            .padding(.all,10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(lineWidth: 1)
+                                    .foregroundStyle(Color.theme.Gray03.opacity(0.4))
+                            )
+                            .background(vmUser.isSameDay(date1:vmUser.cruuentDay , date2: data) ? Color.black :  Color.white)
+                            .clipShape(.rect(cornerRadius: 20))
+                            .frame(width: 50,height: 90)
+                            .onTapGesture {
+                                withAnimation {
+                                    vmUser.cruuentDay = data
+                                }
+                            }
+
+                    }
+                }.padding(.horizontal,10)
+            }
+        }
+    }
+    
+    private var ChartPicerDateColer: some View {
+        VStack(alignment: .leading,spacing: 20) {
+            Text("Your daliy health statices")
+                .font(.system(size: 15,weight: .regular))
+            
+            Chart {
+                ForEach(measurement) { chartItem in
+                    AreaMark(
+                        x: .value("Date", chartItem.date),
+                        y: .value("Amount", chartItem.amount)
+                    )  .foregroundStyle(Color(red: 0.702, green: 0.025, blue: 0.673).opacity(0.07))
+                    LineMark(
+                        x: .value("Date", chartItem.date),
+                        y: .value("Amount", chartItem.amount)
+                    )  .foregroundStyle(Color(red: 0.702, green: 0.025, blue: 0.673))
+                    .symbol {
+                        Circle().fill(selected == chartItem.id ? Color.white : Color.red).opacity(0.6).frame(width: 10)
                     }
                 }
-                Spacer()
-                
-                Image(systemName: "bell")
-                    .font(.system(size: 15,weight: .regular))
-                    .padding(10)
-                    .background(
-                        RoundedRectangle(cornerRadius: .infinity)
-                            .stroke(lineWidth: 1.0)
-                            .foregroundStyle(Color.theme.Gray03.opacity(0.5))
-                    )
-                    .padding(.horizontal)
             }
-            Text("Hey, \(vmUser.currentUserName)")
-                .font(.system(size: 22,weight: .regular))
-                .padding(.all)
-                .frame(maxWidth: .infinity,alignment: .leading)
-        }.padding(.vertical)
+                .chartOverlay { proxy in
+                GeometryReader { geometry in
+                    ZStack(alignment: .top) {
+                        Rectangle().fill(.clear).contentShape(Rectangle())
+                            .onTapGesture { location in
+                                tapSymbol(at: location, proxy: proxy, geometry: geometry)
+                            }
+                    }
+                }
+            }
+            .frame(height: 150)
+            
+        }.padding(.all,10)
+        
 
     }
 
@@ -270,7 +254,6 @@ extension FitHubView {
             .fullScreenCover(isPresented: $showfullScaner){ FoodScannerView() }
     }
     
-    
     private var Wather: some View {
         VStack(alignment: .leading) {
             
@@ -311,95 +294,7 @@ extension FitHubView {
 
     }
 
-}
-
-
-
-
-
-
-
-
-
-func createRings() -> some View {
-    HStack {
-        VStack {
-            Text("Proteins")
-                .font(.system(size: 18,weight: .regular))
-            ZStack {
-                RingView(
-                    percentage: 0.9,
-                    backgroundColor: Color.theme.moveRingBackground,
-                    startColor: Color.theme.moveRingStartColor,
-                    endColor: Color.theme.moveRingEndColor,
-                    thickness: 10
-                )
-                Text("1400")
-                    .font(.system(size: 16,weight: .regular))
-            }
-            .frame(width: 100, height: 100)
-            .aspectRatio(contentMode: .fit)
-        }
-        Spacer()
-        VStack {
-            Text("Carb")
-                .font(.system(size: 18,weight: .regular))
-            ZStack {
-                RingView(
-                    percentage: 0.3,
-                    backgroundColor: Color.theme.exerciseRingBackground,
-                    startColor: Color.theme.exerciseRingStartColor,
-                    endColor: Color.theme.exerciseRingEndColor,
-                    thickness: 10
-                )
-                Text("200")
-                    .font(.system(size: 16,weight: .regular))
-                
-            }
-            .frame(width: 100, height: 100)
-            .aspectRatio(contentMode: .fit)
-        }
-        Spacer()
-        VStack {
-            Text("Fats")
-                .font(.system(size: 18,weight: .regular))
-            ZStack {
-                RingView(
-                    percentage: 0.5,
-                    backgroundColor: Color.theme.standRingBackground,
-                    startColor: Color.theme.standRingStartColor,
-                    endColor: Color.theme.standRingEndColor,
-                    thickness: 10
-                )
-                Text("40")
-                    .font(.system(size: 16,weight: .regular))
-            }
-            .frame(width: 100, height: 100)
-            .aspectRatio(contentMode: .fit)
-        }
-    }
-    .padding(.all)
-    .frame(maxWidth: .infinity)
-    .background(BlurView(style: .dark))
+    
     
 }
 
-func createFooter() -> some View {
-    VStack(alignment: .leading, spacing: 0) {
-
-        Divider()
-            .background(Color.gray)
-            .frame(height: 2)
-            .padding(EdgeInsets(top: 10, leading: 0, bottom: 15, trailing: 0))
-        Text("Flights Climbed")
-            .font(Font.system(size: 18, weight: .regular, design: .default))
-            .kerning(0.05)
-            .foregroundColor(Color.white)
-        Text("4")
-            .font(Font.system(size: 28, weight: .semibold, design: .rounded))
-            .kerning(0.25)
-            .foregroundColor(Color.themeView.activityValueText)
-            .padding([.top], -3)
-        }
-        .padding([.leading], 15)
-}

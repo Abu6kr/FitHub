@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NavigationTobBarView: View {
-    @ObservedObject var vmUser = UserInfoViewModel()
+    @StateObject var vmUser = UserInfoViewModel()
     
     var nameView: String
     
@@ -20,7 +20,7 @@ struct NavigationTobBarView: View {
         HStack {
             if ShoeImage {
                 NavigationLink {
-                    AccountView(vmUser: vmUser)
+                    AccountView()
                 } label: {
                     if let image = vmUser.imageProfiles {
                         Image(uiImage: image)
