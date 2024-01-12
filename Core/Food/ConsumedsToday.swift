@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ConsumedsToday: View {
     var progress  = 0.5
+    let title: String
+    let dataColores: Int
+    let background: Color
     var body: some View {
         HStack(alignment: .top,spacing: 10) {
             ZStack {
@@ -21,16 +24,16 @@ struct ConsumedsToday: View {
                     .trim(from:0, to: CGFloat(self.progress))
                     .stroke(lineWidth: 3)
                     .frame(width: 50,height: 50)
-                    .foregroundStyle(Color.red)
+                    .foregroundStyle(background)
          
             }.rotationEffect (Angle(degrees: -90))
             
             VStack(alignment: .leading,spacing: 10) {
-                Text("calores")
+                Text(title)
                     .font(.system(size: 14,weight: .light))
                     .font(.system(size: 10,weight: .light))
                 HStack(alignment: .bottom,spacing: 5) {
-                    Text("896")
+                    Text("\(dataColores)")
                         .font(.system(size: 16,weight: .regular))
                         .foregroundStyle(Color.black)
                     Text("KCA")
@@ -54,6 +57,6 @@ struct ConsumedsToday: View {
 #Preview {
     ZStack {
 //        Color.black.ignoresSafeArea(.all)
-        ConsumedsToday()
+        ConsumedsToday(title: "Colores", dataColores: 903, background: Color.red)
     }
 }

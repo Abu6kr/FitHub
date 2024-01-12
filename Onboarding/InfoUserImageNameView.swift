@@ -68,7 +68,7 @@ struct InfoUserImageNameView: View {
                     TextField("AboBakr", text: $vmUser.currentUserName)
                         .frame(height: 50)
                         .padding(.leading)
-                        .background(Color.theme.Gray04)
+                        .background(Color.theme.Gray03.opacity(0.3))
                         .foregroundStyle(Color.themeView.secondaryText)
                         .clipShape(.rect(cornerRadius: 10))
                 }.padding()
@@ -86,7 +86,7 @@ struct InfoUserImageNameView: View {
                     onboardingState += 1
                 }
             }) {
-                ButtonView(title: "Save Image", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
+                ButtonView(title: "Save Image", background: Color.theme.Gray03.opacity(0.3), foregroundStyle: Color.themeView.secondaryText)
                     .padding()
             }.frame(maxHeight: .infinity,alignment: .bottom)
                 .onAppear {
@@ -98,5 +98,4 @@ struct InfoUserImageNameView: View {
 
 #Preview {
     InfoUserImageNameView(vmUser: UserInfoViewModel(), onboardingState: .constant(0))
-        .preferredColorScheme(.dark)
 }

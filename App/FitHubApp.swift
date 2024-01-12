@@ -17,7 +17,7 @@ struct FitHubApp: App {
         WindowGroup {
             if isOnboarding {
                 OnboardingView()
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(.light)
                 
             } else {
                 TabBarViewCustems()

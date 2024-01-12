@@ -211,8 +211,6 @@ extension FitHubView {
             .frame(height: 150)
             
         }.padding(.all,10)
-        
-
     }
 
     private var TabBarCamer: some View {

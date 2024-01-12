@@ -52,7 +52,6 @@ struct InformationUser: View {
                     Divider()
                     HStack {
                         Text("Gender")
-                            .foregroundStyle(Color.white)
                         Spacer()
                         Picker(selection:$vmUser.currentUserGender ,
                                label:
@@ -64,7 +63,6 @@ struct InformationUser: View {
                             .background(Color.white)
                             .cornerRadius(10)
                                ,content: {
-                            Text("Section")
                             Text("Male").tag("Male")
                             Text("Female").tag("Female")
                         })
@@ -105,7 +103,6 @@ struct InformationUser: View {
 
 #Preview {
     InformationUser(vmUser: UserInfoViewModel())
-        .preferredColorScheme(.dark)
 }
 
 

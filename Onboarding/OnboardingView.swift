@@ -54,7 +54,7 @@ struct OnboardingView: View {
 
                         }
                     } label: {
-                        ButtonView(title: "Continue", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
+                        ButtonView(title: "Continue", background: Color.theme.Gray03.opacity(0.3), foregroundStyle: Color.themeView.secondaryText)
                             .padding()
                     }
                 case 3:
@@ -66,7 +66,7 @@ struct OnboardingView: View {
                             isOnboarding = false
                         }
                     }) {
-                        ButtonView(title: "Start", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
+                        ButtonView(title: "Start", background: Color.theme.Gray03.opacity(0.3), foregroundStyle: Color.themeView.secondaryText)
                             .padding()
                     }
                 default:
@@ -75,7 +75,7 @@ struct OnboardingView: View {
                             isOnboarding = false
                         }
                     }) {
-                        ButtonView(title: "Start", background: Color.theme.Gray05, foregroundStyle: Color.themeView.secondaryText)
+                        ButtonView(title: "Start", background: Color.theme.Gray03.opacity(0.3), foregroundStyle: Color.themeView.secondaryText)
                             .padding()
                     }
                 }
@@ -87,5 +87,4 @@ struct OnboardingView: View {
 
 #Preview {
     OnboardingView()
-        .preferredColorScheme(.dark)
 }

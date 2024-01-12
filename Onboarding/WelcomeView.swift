@@ -17,7 +17,7 @@ struct WelcomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(red: 0.11, green: 0.11, blue: 0.11).ignoresSafeArea()
+                Color.themeView.background.ignoresSafeArea()
                 VStack {
                     VStack {
                         Text("Welcome to FitHub")
@@ -93,7 +93,7 @@ struct WelcomeView: View {
 
 #Preview {
     WelcomeView()
-        .preferredColorScheme(.dark)
+     
 }
 
 
@@ -106,9 +106,9 @@ extension WelcomeView {
                 if PlayAnmcisens == true {
                     RingView(
                         percentage: 2,
-                        backgroundColor: Color.themeView.Coloraccent.opacity(0.2),
-                        startColor: Color.themeView.Coloraccent.opacity(0.6),
-                        endColor: Color.themeView.Coloraccent,
+                        backgroundColor: Color.theme.Gray03.opacity(0.2),
+                        startColor: Color.theme.Gray03.opacity(0.6),
+                        endColor: Color.theme.Gray03,
                         thickness: 2
                     )
                 } else {
@@ -129,7 +129,7 @@ extension WelcomeView {
         ZStack {
             if PlayAnmcisens2 == true {
                 Image(systemName: "person.line.dotted.person.fill")
-                    .foregroundStyle(Color.themeView.Coloraccent)
+                    .foregroundStyle(Color.theme.Gray03)
             }
         }
         
@@ -140,13 +140,13 @@ extension WelcomeView {
             ZStack {
                 Image(systemName: "figure.run")
                     .offset(x: PlayAnmcisens3 ? 50 : 0)
-                    .foregroundStyle(Color.black)
+                    .foregroundStyle(Color.white)
                 Image(systemName: "figure.run")
                     .offset(x: PlayAnmcisens3 ? 0 : -50)
-                    .foregroundStyle(Color.black)
+                    .foregroundStyle(Color.white)
             }.font(.system(size: 10))
                 .frame(width: 24.5,height: 24.5)
-                .background(Color.themeView.Coloraccent)
+                .background(Color.theme.Gray03)
                 .clipShape(Circle())
             
         }

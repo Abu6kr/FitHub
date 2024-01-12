@@ -65,7 +65,6 @@ struct TabBarViewCustems: View {
                                     if sectionTabBar == .WorkOut {Spacer()}
                                     
                                     if sectionTabBar == .Food {Spacer()}
-
                                     
                                     if sectionTabBar == .Community {Spacer()}
                                     
