@@ -15,6 +15,7 @@ struct FoodView: View {
         GridItem(.flexible(minimum: 40)),
         GridItem(.flexible(minimum: 40)),
     ]
+    @State private var ShowAddFodd: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -30,9 +31,13 @@ struct FoodView: View {
                             ConsumedsToday(title: "Calories", dataColores: 960, background: Color.red)
                             ConsumedsToday(title: "Protein", dataColores: 973, background: Color.green)
                         }
-                        
-                        FoodMealsDayView()
-                        
+                        Button(action: {ShowAddFodd.toggle()}, label: {
+                            FoodMealsDayView()
+                        })
+                     
+                            .fullScreenCover(isPresented: $ShowAddFodd){
+                                SeactionMealsView()
+                            }
                     }
                 }
             }
