@@ -20,7 +20,7 @@ struct FitHubApp: App {
                 .preferredColorScheme(.light)
                 
             } else {
-                TabBarViewCustems()
+                NtivationsView()
                     .environmentObject(vmUser)
                     .environmentObject(healthManger)
                     .preferredColorScheme(.light)
